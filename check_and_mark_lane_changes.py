@@ -47,6 +47,6 @@ dict = {'name_of_img': names, 'lane change (0/1)': lane_change}
 df = pd.DataFrame(dict)  
     
 # saving the dataframe  
-df.to_csv('/media/sagar/New Volume/everything/job/Seneca/detecting_lane_changes/github/ML/Image_names_and_lane_change_status.csv')  
+df.to_csv('./Image_names_and_lane_change_status.csv')  
     
             

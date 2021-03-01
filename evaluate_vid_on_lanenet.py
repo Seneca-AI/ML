@@ -41,10 +41,10 @@ def init_args():
     :return:
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image_dir', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips",help='The source tusimple lane test data dir')
+    parser.add_argument('--image_dir', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips2/clips",help='The source tusimple lane test data dir')
     parser.add_argument('--weights_path', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/weights/BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt",help='The model weights path')
-    parser.add_argument('--save_dir', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/results", help='The test output save root dir')
-    parser.add_argument('--save_dir_binary', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results", help='The test output save root dir')
+    parser.add_argument('--save_dir', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/results2", help='The test output save root dir')
+    parser.add_argument('--save_dir_binary', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2", help='The test output save root dir')
     return parser.parse_args()
 
 
