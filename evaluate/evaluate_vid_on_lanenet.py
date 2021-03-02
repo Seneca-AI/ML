@@ -25,7 +25,8 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import tqdm
-
+import sys
+sys.path.append("../source")
 from lanenet_model import lanenet
 from lanenet_model import lanenet_postprocess
 from local_utils.config_utils import parse_config_utils

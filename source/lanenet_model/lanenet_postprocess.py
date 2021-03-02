@@ -256,7 +256,7 @@ class LaneNetPostProcessor(object):
     """
     lanenet post process for lane generation
     """
-    def __init__(self, cfg, ipm_remap_file_path='./data/tusimple_ipm_remap.yml'):
+    def __init__(self, cfg, ipm_remap_file_path='../source/data/tusimple_ipm_remap.yml'):
         """
 
         :param ipm_remap_file_path: ipm generate file path

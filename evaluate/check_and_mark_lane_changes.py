@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 
-source_binary = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results/*"
+source_binary = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2/*"
 import pandas as pd
 names = []
 lane_change = []
@@ -47,6 +47,6 @@ dict = {'name_of_img': names, 'lane change (0/1)': lane_change}
 df = pd.DataFrame(dict)  
     
 # saving the dataframe  
-df.to_csv('./Image_names_and_lane_change_status.csv')  
+df.to_csv('./Image_names_and_lane_change_status_vid_2.csv')  
     
             

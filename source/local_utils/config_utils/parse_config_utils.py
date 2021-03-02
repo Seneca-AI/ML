@@ -94,10 +94,12 @@ class Config(dict):
     @staticmethod
     def _load_config_file(config_file_path):
         """
-
+        
         :param config_file_path
         :return:
         """
+        # import pdb
+        # pdb.set_trace()
         if not os.access(config_file_path, os.R_OK):
             raise OSError('Config file: {:s}, can not be read'.format(config_file_path))
         with open(config_file_path, 'r') as f:
@@ -222,7 +224,7 @@ class Config(dict):
         return json.dump(origin_dict, f_obj)
 
 
-lanenet_cfg = Config(config_path='./config/tusimple_lanenet.yaml')
+lanenet_cfg = Config(config_path='../source/config/tusimple_lanenet.yaml')
 
 
 if __name__ == '__main__':
