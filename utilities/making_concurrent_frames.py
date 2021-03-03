@@ -11,8 +11,7 @@ import glob
 import os
 import numpy as np
 #%% for changing the tusimple folder in folder images to concurrent folder
-Source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*"
-Dest = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/"
+
 def renaming_padding_if_in_folder_names(Source,Dest):
     """
     
@@ -68,9 +67,8 @@ def renaming_padding_if_in_folder_names(Source,Dest):
     return hi
 #%% for binary masks for converting the 60_1 numbered images into sorted thing
 
-Source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results_wrong_format/*"
-Dest = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results/"
-def renaming_by_adding_number_names(Source,Dest):
+
+def renaming_by_adding_number_names(Source2,Dest2):
     """
     
 
@@ -115,3 +113,11 @@ def renaming_by_adding_number_names(Source,Dest):
         cv2.imwrite(Dest + new_name + ".jpg", img)
     hi = sorted(names)
     return hi
+#%% test code
+if __name__ == '__main__':
+    Source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*"
+    Dest = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/"
+    Source2 = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results_wrong_format/*"
+    Dest2 = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results/"
+    renaming_padding_if_in_folder_names(Source,Dest)
+    renaming_by_adding_number_names(Source2,Dest2)

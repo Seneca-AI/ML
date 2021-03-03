@@ -12,6 +12,21 @@ import glob
 
 
 def frame_to_vids(source,output_vid_name):
+    """
+    
+
+    Parameters
+    ----------
+    source : TYPE
+        DESCRIPTION.
+    output_vid_name : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
     img_array = []
     for filename in sorted(glob.glob(source)):
         img = cv2.imread(filename)
@@ -25,7 +40,8 @@ def frame_to_vids(source,output_vid_name):
     for i in range(len(img_array)):
         out.write(img_array[i])
     out.release()
-
-source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*"
-output_vid_name = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi'
-frame_to_vids(source,output_vid_name)
+#%% test code
+if __name__ == '__main__':
+    source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*"
+    output_vid_name = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi'
+    frame_to_vids(source,output_vid_name)
