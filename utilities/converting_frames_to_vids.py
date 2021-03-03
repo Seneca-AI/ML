@@ -10,19 +10,22 @@ import cv2
 import numpy as np
 import glob
 
-img_array = []
+
+def frame_to_vids(source,output_vid_name):
+    img_array = []
+    for filename in sorted(glob.glob(source)):
+        img = cv2.imread(filename)
+        height, width, layers = img.shape
+        size = (width,height)
+        img_array.append(img)
+    
+    
+    out = cv2.VideoWriter(output_vid_name,cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
+     
+    for i in range(len(img_array)):
+        out.write(img_array[i])
+    out.release()
+
 source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*"
-
-for filename in sorted(glob.glob(source)):
-    img = cv2.imread(filename)
-    height, width, layers = img.shape
-    size = (width,height)
-    img_array.append(img)
-
-
-out = cv2.VideoWriter('/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi',cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
- 
-for i in range(len(img_array)):
-    out.write(img_array[i])
-out.release()
-
+output_vid_name = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi'
+frame_to_vids(source,output_vid_name)

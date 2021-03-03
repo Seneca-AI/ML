@@ -18,7 +18,8 @@ import glob
 
 
 #%% for reading and resizing images, Images are now available in the folder. 
-
+"""
+"""
 source = glob.glob("/media/sagar/New Volume/everything/job/Seneca/detecting_lane_changes/images/images/*")
 
 for i in source:
