@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Feb 23 20:25:26 2021
-
-@author: sagar
+The code is used for renaming the images if they are in any other form
 """
 
 import cv2
@@ -14,8 +12,6 @@ import numpy as np
 
 def renaming_padding_if_in_folder_names(Source,Dest):
     """
-    
-
     Parameters
     ----------
     Source : string
@@ -70,8 +66,6 @@ def renaming_padding_if_in_folder_names(Source,Dest):
 
 def renaming_by_adding_number_names(Source2,Dest2):
     """
-    
-
     Parameters
     ----------
     Source : string
