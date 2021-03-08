@@ -12,7 +12,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import glob
 import pandas as pd
-
+import argparse
+def init_args():
+    """
+    for the CLI
+    :return:
+        arguments
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source_binary_images', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2/*",help='The path to the input dataset for second type of dataset')
+    parser.add_argument('--CSV_destination', type=str, default= './Image_names_and_lane_change_status_vid_2.csv',help='path to where you wish to save the frames for the output of second type of dataset')
+    return parser.parse_args()
 
 def check_and_mark_lane_changes(source_binary, CSV_destination):
     """
@@ -30,7 +40,7 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
     Returns
     -------
     df : dataframe
-        DESCRIPTION. Prints the 
+        DESCRIPTION. Prints the dataframe
 
     """
     names = []
