@@ -32,7 +32,7 @@ def video_to_frames(input_loc, output_loc):
             print ("Done extracting frames.\n%d frames extracted" % count)
             print ("It took %d seconds forconversion." % (time_end-time_start))
             break
-#%% test code
+
 if __name__=="__main__":
 
     input_loc = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip2.avi'

@@ -12,13 +12,14 @@ def frame_to_vids(source,output_vid_name):
     Parameters
     ----------
     source : str
-        Address of the images 
+        Path to the input images 
     output_vid_name : avi vid
-        name and address of the vid
+        name and path to the output video
 
     Returns
     -------
-    All the images that have been taken from the vid
+    Makes the video of the input frames.
+    Function does not return any output
 
     """
     img_array = []
@@ -34,7 +35,7 @@ def frame_to_vids(source,output_vid_name):
         out.write(img_array[i])
     out.release()
     
-#%% test code
+
 if __name__ == '__main__':
     source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*"
     output_vid_name = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi'

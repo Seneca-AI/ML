@@ -8,7 +8,7 @@ import cv2
 import glob
 import os
 import numpy as np
-#%% for changing the tusimple folder in folder images to concurrent folder
+
 
 def renaming_padding_if_in_folder_names(Source,Dest):
     """
@@ -43,8 +43,7 @@ def renaming_padding_if_in_folder_names(Source,Dest):
     """
     names = []
     for i in glob.glob(Source):
-        #img = cv2.imread(i)
-        #print(i)
+        img = cv2.imread(i)
         
         name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
         if len(name) == 1:
@@ -58,11 +57,9 @@ def renaming_padding_if_in_folder_names(Source,Dest):
     
         print(new_name)
         names.append(new_name)
-        #cv2.imwrite(Dest + new_name + ".jpg", img)
+        cv2.imwrite(Dest + new_name + ".jpg", img)
     hi = sorted(names)
     return hi
-#%% for binary masks for converting the 60_1 numbered images into sorted thing
-
 
 def renaming_by_adding_number_names(Source2,Dest2):
     """
@@ -89,7 +86,6 @@ def renaming_by_adding_number_names(Source2,Dest2):
     names = []
     for i in glob.glob(Source):
         img = cv2.imread(i)
-        #print(i)
         name1 = i.split("/")[-1].split("_")[0]
         name2 = i.split("/")[-1].split("_")[1].split(".")[0]
         name = str(int(name1) + int(name2))
@@ -102,12 +98,11 @@ def renaming_by_adding_number_names(Source2,Dest2):
         if len(name) == 4:
             new_name = name
     
-        print(new_name)
         names.append(new_name)
         cv2.imwrite(Dest + new_name + ".jpg", img)
     hi = sorted(names)
     return hi
-#%% test code
+
 if __name__ == '__main__':
     Source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*"
     Dest = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/"
