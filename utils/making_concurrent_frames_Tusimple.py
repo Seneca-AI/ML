@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-The code is used for renaming the images if they are in any other form
+The code is used for renaming the images if they are in any other form. Use only one of the below functions
 """
 
 import cv2
 import glob
 import os
 import numpy as np
-
+import argparse
+def init_args():
+    """
+    for the CLI
+    :return:
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source_dataset', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*",help='The path to the input dataset')
+    parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/",help='path to where you wish to save the frames')
+    parser.add_argument('--source_dataset_2', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results_wrong_format/*",help='The path to the input dataset')
+    parser.add_argument('--output_images_2', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results/",help='path to where you wish to save the frames')
+    return parser.parse_args()
 
 def renaming_padding_if_in_folder_names(Source,Dest):
     """
@@ -104,9 +115,10 @@ def renaming_by_adding_number_names(Source2,Dest2):
     return hi
 
 if __name__ == '__main__':
+    args = init_args()
     Source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*"
     Dest = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/"
     Source2 = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results_wrong_format/*"
     Dest2 = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results/"
-    renaming_padding_if_in_folder_names(Source,Dest)
-    renaming_by_adding_number_names(Source2,Dest2)
+    renaming_padding_if_in_folder_names(Source = args.source_dataset,Dest = args.output_images)
+    renaming_by_adding_number_names(Source2 = args.source_dataset_2,Dest2 = args.output_images_2)

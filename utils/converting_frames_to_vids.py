@@ -1,10 +1,20 @@
 """
-Making vid from images and appending 0s in front of it
+Making vid from images
 """
 
 import cv2
 import numpy as np
 import glob
+import argparse
+def init_args():
+    """
+
+    :return:
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source_images', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*",help='The path to the input images')
+    parser.add_argument('--output_vid', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi",help='name and path to the output video')
+    return parser.parse_args()
 
 def frame_to_vids(source,output_vid_name):
     """
@@ -37,6 +47,5 @@ def frame_to_vids(source,output_vid_name):
     
 
 if __name__ == '__main__':
-    source = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*"
-    output_vid_name = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi'
-    frame_to_vids(source,output_vid_name)
+    args = init_args()
+    frame_to_vids(source = args.source_images,output_vid_name = args.output_vid)
