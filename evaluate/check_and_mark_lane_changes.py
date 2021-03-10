@@ -81,6 +81,5 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
     return df
 #%% test code
 if __name__ == '__main__':
-    source_binary = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2/*"
-    CSV_destination = './Image_names_and_lane_change_status_vid_2.csv'
-    check_and_mark_lane_changes(source_binary, CSV_destination)
+    args = init_args()
+    check_and_mark_lane_changes(source_binary = args.source_binary_images, CSV_destination= args.CSV_destination)

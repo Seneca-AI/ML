@@ -14,8 +14,6 @@ import numpy as np
 
 def renaming_padding_if_in_folder_names(Source,Dest):
     """
-    
-
     Parameters
     ----------
     Source : string
@@ -40,29 +38,30 @@ def renaming_padding_if_in_folder_names(Source,Dest):
 
     Returns
     -------
-    images: save images with renamed and in the indicated directories
+    images: save images with renamed and in the indicated directories, all the images have 0s appended in the front for easier sorting
     hi : list
         It is a list of all the images that we just sorted and renamed
 
     """
     names = []
+    lengths = []
     for i in glob.glob(Source):
-        #img = cv2.imread(i)
+        img = cv2.imread(i)
         #print(i)
         
         name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
-        if len(name) == 1:
-            new_name = "000"+ name
-        if len(name) == 2:
-            new_name = "00" + name
-        if len(name) == 3:
-            new_name = "0" + name
-        if len(name) == 4:
-            new_name = name
+        length = len(name)
+        lengths.append(length)
+    maximum_name_length = max(lengths)
     
-        print(new_name)
+    for i in glob.glob(Source):
+        img = cv2.imread(i)
+        name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
+        name_len = len(name)
+        zeros_length = maximum_name_length - name_len
+        new_name = name.zfill(zeros_length + len(name))
         names.append(new_name)
-        #cv2.imwrite(Dest + new_name + ".jpg", img)
+        cv2.imwrite(Dest + new_name + ".jpg", img)
     hi = sorted(names)
     return hi
 #%% for binary masks for converting the 60_1 numbered images into sorted thing
