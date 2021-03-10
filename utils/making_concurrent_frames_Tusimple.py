@@ -51,20 +51,22 @@ def renaming_padding_if_in_folder_names(Source,Dest):
 
     """
     names = []
+    lengths = []
     for i in glob.glob(Source):
         img = cv2.imread(i)
+        #print(i)
         
         name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
-        if len(name) == 1:
-            new_name = "000"+ name
-        if len(name) == 2:
-            new_name = "00" + name
-        if len(name) == 3:
-            new_name = "0" + name
-        if len(name) == 4:
-            new_name = name
+        length = len(name)
+        lengths.append(length)
+    maximum_name_length = max(lengths)
     
-        print(new_name)
+    for i in glob.glob(Source):
+        img = cv2.imread(i)
+        name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
+        name_len = len(name)
+        zeros_length = maximum_name_length - name_len
+        new_name = name.zfill(zeros_length + len(name))
         names.append(new_name)
         cv2.imwrite(Dest + new_name + ".jpg", img)
     hi = sorted(names)
