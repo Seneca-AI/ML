@@ -16,7 +16,7 @@ def init_args():
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--source_dataset', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*",help='The path to the input dataset')
-    parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips/",help='path to where you wish to save the frames')
+    parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/delete_if_seen/",help='path to where you wish to save the frames')
     return parser.parse_args()
 
 def renaming_padding_if_in_folder_names(Source,Dest):
@@ -45,7 +45,7 @@ def renaming_padding_if_in_folder_names(Source,Dest):
 
     Returns
     -------
-    images: save images with renamed and in the indicated directories
+    images: save images with renamed and in the indicated directories, all the images have 0s appended in the front for easier sorting
     hi : list
         It is a list of all the images that we just sorted and renamed
 
