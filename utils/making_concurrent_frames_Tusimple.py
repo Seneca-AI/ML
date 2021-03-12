@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
-The code is used for renaming the images if they are in any other form.
+The code is used for renaming the images if they are in given (in the function) incorrect format.
 """
 
 import cv2
@@ -10,10 +8,6 @@ import os
 import numpy as np
 import argparse
 def init_args():
-    """
-    for the CLI
-    :return:
-    """
     parser = argparse.ArgumentParser()
     parser.add_argument('--source_dataset', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*",help='The path to the input dataset')
     parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/delete_if_seen/",help='path to where you wish to save the frames')

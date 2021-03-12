@@ -6,11 +6,8 @@ import cv2
 import numpy as np
 import glob
 import argparse
-def init_args():
-    """
 
-    :return:
-    """
+def init_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source_images', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips1/*",help='The path to the input images')
     parser.add_argument('--output_vid', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip1.avi",help='name and path to the output video')

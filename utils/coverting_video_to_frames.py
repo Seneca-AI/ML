@@ -2,18 +2,16 @@ import cv2
 import time
 import os
 import argparse
+
 def init_args():
-    """
-    for the CLI
-    :return:
-    """
     parser = argparse.ArgumentParser()
     parser.add_argument('--source_vid', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip2.avi",help='The path to the input vid')
     parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frame_extraction/",help='path to output frames of the vid')
     return parser.parse_args()
 
 def video_to_frames(input_loc, output_loc):
-    """Function to extract frames from input video file
+    """
+    Function to extract frames from input video file
     and save them as separate frames in an output directory.
     Args:
         input_loc: Input video file.
@@ -40,7 +38,7 @@ def video_to_frames(input_loc, output_loc):
             time_end = time.time()
             cap.release()
             print ("Done extracting frames.\n%d frames extracted" % count)
-            print ("It took %d seconds forconversion." % (time_end-time_start))
+            print ("It took %d seconds for conversion." % (time_end-time_start))
             break
 
 if __name__=="__main__":
