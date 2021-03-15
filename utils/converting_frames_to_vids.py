@@ -1,4 +1,8 @@
 """
+sample CLI: 
+1. cd utils
+2. python3 converting_frames_to_vids.py --source_images /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/clips1/* --output_vid /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/vids/clip1.avi
+Code Description
 Making vid from images
 """
 

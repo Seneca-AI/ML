@@ -1,4 +1,7 @@
 """
+Sample CLI:
+python3 making_concurrent_frames_Tusimple.py --source_dataset /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/frames2/*/* --output_images /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/delete_if_seen/
+Code Description
 The code is used for renaming the images if they are in given (in the function) incorrect format.
 """
 

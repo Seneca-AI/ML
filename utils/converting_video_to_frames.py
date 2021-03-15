@@ -1,3 +1,10 @@
+"""
+sample CLI: 
+1. cd utils
+2. python3 converting_video_to_frames.py --source_vid /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/vids/clip2.avi --output_images /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/frame_extraction/
+Code Description
+Making frames from video
+"""
 import cv2
 import time
 import os
