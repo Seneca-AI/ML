@@ -1,6 +1,6 @@
 """
 CLI 
-python3 Drawing_BBOX_on_vehicles.py --source_images clip4/*.jpg --source_labels labels --CSV_destination Image_names_and_too_close_status.csv
+python3 Making_csv_of_too_close.py --source_images clip4/*.jpg --source_labels labels --CSV_destination Image_names_and_too_close_status.csv
 code for overlapping the BBOX with image
 We have taken classes of 2 (car), 5 (bus), 7 (truck)
 """
