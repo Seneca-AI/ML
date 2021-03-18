@@ -1,4 +1,6 @@
 """
+sample CLI
+python3 check_and_mark_lane_changes.py --source_binary_images ./binary_results2 --CSV_destination ../extras/Image_names_and_lane_change_status_vid_2.csv
 Cropping the images and looking for lanes
 """
 

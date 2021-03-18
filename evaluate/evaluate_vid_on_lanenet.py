@@ -1,4 +1,6 @@
 """
+sample CLI
+python3 evalualte_vid_on_lanenet.py --image_dir ./clips --weights_path ./tusimple_lanenet.ckpt --save_dir ./results2 --save_dir_binary ./binary_results2
 Evaluate lanenet model on any vid
 """
 import argparse
@@ -30,7 +32,7 @@ def init_args():
     parser.add_argument('--save_dir_binary', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2", help='The test output save root dir')
     return parser.parse_args()
 
-def eval_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
+def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     """
     :param src_dir: path of the frames
     :param weights_path: trained model weight .ckpt file
@@ -109,7 +111,7 @@ def eval_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
 
 if __name__ == '__main__':
     args = init_args()
-    eval_lanenet(
+    evalualte_vid_on_lanenet(
         src_dir=args.image_dir,
         weights_path=args.weights_path,
         save_dir=args.save_dir,
