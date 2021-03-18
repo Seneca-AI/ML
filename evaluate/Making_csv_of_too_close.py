@@ -17,7 +17,7 @@ def init_args():
     parser.add_argument('--CSV_destination', type=str, default= 'Image_names_and_too_close_status.csv',help='path to where you wish to save the csv file')
     return parser.parse_args()
 
-def Drawing_BBOX_on_vehicles(source_images, source_labels, CSV_destination):
+def Making_csv_of_too_close(source_images, source_labels, CSV_destination):
     box2 = np.array([560,230,730,390])
     classes_taken = np.array([2,5,7])
     names = []
@@ -62,7 +62,7 @@ def Drawing_BBOX_on_vehicles(source_images, source_labels, CSV_destination):
 
 if __name__ == '__main__':
     args = init_args()
-    Drawing_BBOX_on_vehicles(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
+    Making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
 
 
 
