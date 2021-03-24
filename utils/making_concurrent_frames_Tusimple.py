@@ -43,16 +43,14 @@ def renaming_padding_if_in_folder_names(Source,Dest):
     Returns
     -------
     images: save images with renamed and in the indicated directories, all the images have 0s appended in the front for easier sorting
-    hi : list
+    renamed_img_list : list
         It is a list of all the images that we just sorted and renamed
 
     """
     names = []
     lengths = []
     for i in glob.glob(Source):
-        img = cv2.imread(i)
-        #print(i)
-        
+        img = cv2.imread(i)        
         name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
         length = len(name)
         lengths.append(length)
@@ -66,8 +64,8 @@ def renaming_padding_if_in_folder_names(Source,Dest):
         new_name = name.zfill(zeros_length + len(name))
         names.append(new_name)
         cv2.imwrite(Dest + new_name + ".jpg", img)
-    hi = sorted(names)
-    return hi
+    renamed_img_list = sorted(names)
+    return renamed_img_list
 
 if __name__ == '__main__':
     args = init_args()

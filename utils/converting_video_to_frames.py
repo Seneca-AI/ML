@@ -3,7 +3,7 @@ sample CLI:
 1. cd utils
 2. python3 converting_video_to_frames.py --source_vid /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/vids/clip2.avi --output_images /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/frame_extraction/
 Code Description
-Making frames from video
+Outputs the extracted frames from a given video file and outputs them to a specified directory.
 """
 import cv2
 import time
@@ -28,22 +28,24 @@ def video_to_frames(input_loc, output_loc):
     """
     try:
         os.mkdir(output_loc)
-    except OSError:
+    except OSError as ex:
+        if ex.errno != errno.EEXIST:
+            raise
         pass
     
     time_start = time.time()
-    cap = cv2.VideoCapture(input_loc)
-    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
+    video_capture = cv2.VideoCapture(input_loc)
+    frame_count = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
     print ("Number of frames: ", frame_count)
     count = 0
     print ("Converting video..\n")
-    while cap.isOpened():
-        ret, frame = cap.read()
+    while video_capture.isOpened():
+        ret, frame = video_capture.read()
         cv2.imwrite(output_loc + "/%#05d.jpg" % (count+1), frame)
         count = count + 1
         if (count > (frame_count-1)):
             time_end = time.time()
-            cap.release()
+            video_capture.release()
             print ("Done extracting frames.\n%d frames extracted" % count)
             print ("It took %d seconds for conversion." % (time_end-time_start))
             break
