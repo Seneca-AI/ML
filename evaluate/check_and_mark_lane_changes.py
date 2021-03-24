@@ -19,9 +19,10 @@ def init_args():
 
 def check_and_mark_lane_changes(source_binary, CSV_destination):
     """
-    This function is used for checking all the instances of lane changes and put them all in a csv
-    file with a 1 against the frame names and 0 against the case where we dont have instance of lane change
-    
+    This function reads a directory of images, evaluates each image on whether 
+    or not the driver is in the middle of a lane change by checking if the lane 
+    line is within a bounded box, and stores the output (1 = changing_lanes, 0 = !changing_lanes) 
+    in a CSV file against name of every frame.    
 
     Parameters
     ----------
@@ -32,7 +33,8 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
 
     Returns
     -------
-    makes the csv of the frames name vs lane change instances
+    None
+    Makes the csv of the frames name vs lane change instances
 
     """
     names = []
@@ -40,14 +42,21 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
     for i in sorted(glob.glob(source_binary)):
         s = 0
         img = cv2.imread(i,0)
-        img = cv2.resize(img, (512,257), interpolation = cv2.INTER_AREA)
+        size = (512,256)
+        img = cv2.resize(img, size, interpolation = cv2.INTER_AREA)
+        
+        # from experimentation these are the values of the BBOX
         X1 = int(img.shape[1]*1/4)+2
         X2 = int(img.shape[1]*3/4)
-        Y1 = 211
+        Y1 = 211 
         Y2 = len(img)
+        
         cropped_area = img[Y1:Y2,X1:X2]
         unique_array = np.unique(cropped_area)
-        element = [250,251,252,253,254,255]
+        
+        # these are the values that are given by the evaluate_vid_on_lanenet.py
+        element = [250,251,252,253,254,255] 
+        
         existing = np.isin(element, unique_array)
         
         name = i.split("/")[-1]

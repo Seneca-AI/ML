@@ -23,7 +23,6 @@ from local_utils.log_util import init_logger
 CFG = parse_config_utils.lanenet_cfg
 LOG = init_logger.get_logger(log_file_name_prefix='lanenet_eval_vid')
 
-
 def init_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_dir', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips2/clips",help='The source tusimple lane test data dir')
@@ -34,11 +33,24 @@ def init_args():
 
 def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     """
-    :param src_dir: path of the frames
-    :param weights_path: trained model weight .ckpt file
-    :param save_dir: path of the folder where the results are saved
-    :save_dir_binary: path to folder where the binary results are saved
-    :return:
+    This functions takes the images from the image_dir and makes a binary mask of the lanes
+    over all the images. These lane binary images can be used for further computation.
+
+    Parameters
+    ----------
+    src_dir : string
+        DESCRIPTION path of the frames
+    weights_path : string
+        DESCRIPTION. trained model weight .ckpt file
+    save_dir : string
+        DESCRIPTION: path of the folder where the results are to be saved
+    save_dir_binary : TYPE
+        DESCRIPTION: path to folder where the binary results are to besaved
+
+    Returns
+    -------
+    Images with lanes marked on them in the save_dir folder and binary results in the save_dir_binary folder
+
     """
     assert ops.exists(src_dir), '{:s} not exist'.format(src_dir)
 
@@ -111,7 +123,7 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
 
 if __name__ == '__main__':
     args = init_args()
-    evalualte_vid_on_lanenet(
+    evaluate_vid_on_lanenet(
         src_dir=args.image_dir,
         weights_path=args.weights_path,
         save_dir=args.save_dir,
