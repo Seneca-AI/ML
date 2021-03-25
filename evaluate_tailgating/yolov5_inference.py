@@ -1,6 +1,6 @@
 """
 CLI
-python3 yolov5_inference2.py --weights ../source_tailgating/yolov5s.pt --source /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/images --img-size 1280 --conf-thres 0.25 --iou-thres 0.45 --device 0 --output_folder /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/labels/ 
+python3 yolov5_inference.py --weights ../source_tailgating/yolov5s.pt --source ../data/too_close/images --img-size 1280 --conf-thres 0.25 --iou-thres 0.45 --device "-1" --output_folder ../data/too_close/labels/ 
 Code for getting the inference of the yolov5
 """
 
@@ -23,7 +23,7 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 
-def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
+def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
     
     """
     This function is used for finding the various vehicles and get their coordinates.
@@ -57,10 +57,10 @@ def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save
 
     """
     
-    source, weights, save_txt, imgsz = opt.source, opt.weights, opt.save_txt, opt.img_size
+    source, weights, save_txt, imgsz = source, weights, save_txt, img_size
 
     # Directories
-    save_dir =Path(opt.output_folder)
+    save_dir =Path(output_folder)
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
     
     save_dir_imgs = str(save_dir) + "/images"
@@ -71,7 +71,7 @@ def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save
         
     # Initialize
     set_logging()
-    device = select_device(opt.device)
+    device = select_device(device)
     half = device.type != 'cpu'  # half precision only supported on CUDA
 
     # Load model
@@ -112,7 +112,7 @@ def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save
         pred = model(img, augment=False)[0]
 
         # Apply NMS
-        pred = non_max_suppression(pred, opt.conf_thres, opt.iou_thres, classes=opt.classes, agnostic=False)
+        pred = non_max_suppression(pred, conf_thres, iou_thres, classes=classes, agnostic=False)
         t2 = time_synchronized()
 
         # Apply Classifier
@@ -141,16 +141,13 @@ def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save
                 for *xyxy, conf, cls in reversed(det):
                     if save_txt:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                        line = (cls, *xywh, conf) if opt.save_conf else (cls, *xywh)  # label format
+                        line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(txt_path + '.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
                     if save_img:  # Add bbox to image
                         label = f'{names[int(cls)]} {conf:.2f}'
                         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
-
-            # Print time (inference + NMS)
-            print(f'{s}Done. ({t2 - t1:.3f}s)')
 
             # Save results (image with detections)
             if save_img:
@@ -171,15 +168,11 @@ def detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save
 
     if save_txt or save_img:
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
-        print(f"Results saved to {save_dir}{s}")
-
-    print(f'Done. ({time.time() - t0:.3f}s)')
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='../source_tailgating/yolov5s.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/images', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/images', help='source')  
     parser.add_argument('--img-size', type=int, default=1280, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='IOU threshold for NMS')
@@ -187,7 +180,7 @@ if __name__ == '__main__':
     parser.add_argument('--save-txt', action='store_true', default = "text.txt",help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--classes', nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
-    parser.add_argument('--output_folder', default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/labels/', help='where you wish to save the results')
+    parser.add_argument('--output_folder', default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/labels/', help='where you wish to save the labels')
     opt = parser.parse_args()
     print(opt)
 

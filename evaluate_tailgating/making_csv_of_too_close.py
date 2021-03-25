@@ -27,7 +27,7 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     too_close = []
     for i in sorted(glob.glob(source_images)):
         img = cv2.imread(i)
-        label = source_labels + "/" + i.split("/")[-1].split(".")[0] + ".txt"
+        label = source_labels +"labels/" +i.split("/")[-1].split(".")[0] + ".txt"
         df = pd.read_csv(label, sep=" ", header = None)
         names.append(i.split("/")[-1])
         s = 0
@@ -64,7 +64,7 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
 
 if __name__ == '__main__':
     args = init_args()
-    Making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
+    making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
 
 
 
