@@ -1,4 +1,4 @@
 experimental_tailgating/
 source_tailgating/
 evaluate_tailgating/*.csv
-evaluate_tailgating/yolov5_inference.py
+extras_tailgating/
