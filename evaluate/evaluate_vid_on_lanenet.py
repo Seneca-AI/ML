@@ -119,7 +119,6 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
                 continue
             
             cv2.imwrite(output_image_path, postprocess_result['source_image'])
-    return
 
 if __name__ == '__main__':
     args = init_args()

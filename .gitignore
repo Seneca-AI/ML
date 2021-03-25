@@ -1,2 +1,5 @@
 extras/
-evaluate/check_and_mark_lane_changes.py
+evaluate/
+*/__pycache__
+*/log
+log
