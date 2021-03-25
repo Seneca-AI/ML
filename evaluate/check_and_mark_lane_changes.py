@@ -53,12 +53,8 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         
         cropped_area = img[Y1:Y2,X1:X2]
         unique_array = np.unique(cropped_area)
-        
-        # these are the values that are given by the evaluate_vid_on_lanenet.py
-        element = [250,251,252,253,254,255] 
-        
-        existing = np.isin(element, unique_array)
-        
+        lane_values = [250,251,252,253,254,255] 
+        existing = np.isin(lane_values, unique_array)
         name = i.split("/")[-1]
         for j in existing:
             if j == True:

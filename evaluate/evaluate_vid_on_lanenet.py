@@ -14,11 +14,12 @@ import numpy as np
 import tensorflow as tf
 import tqdm
 import sys
-sys.path.append("../source")
-from lanenet_model import lanenet
-from lanenet_model import lanenet_postprocess
-from local_utils.config_utils import parse_config_utils
-from local_utils.log_util import init_logger
+sys.path.append("../")
+
+from source.lanenet_model import lanenet
+from source.lanenet_model import lanenet_postprocess
+from source.local_utils.config_utils import parse_config_utils
+from source.local_utils.log_util import init_logger
 
 CFG = parse_config_utils.lanenet_cfg
 LOG = init_logger.get_logger(log_file_name_prefix='lanenet_eval_vid')
