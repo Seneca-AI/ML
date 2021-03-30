@@ -1,10 +1,4 @@
 """
-Created on Thu Mar 25 15:05:26 2021
-
-@author: sagar
-"""
-
-"""
 CLI
 python3 -m unittest making_csv_too_close_test.py
 Result
@@ -49,26 +43,6 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         actual = making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder , CSV_destination = CSV_destination+csv_name)
         self.assertIsNone(actual)
 
-    
-    def test_output_type(self):
-        weights = "../source_tailgating/yolov5s.pt"
-        source = "../data/too_close/images" 
-        imgsz = 1280 
-        conf_thres = 0.25
-        iou_thres = 0.45
-        device = ""
-        output_folder = "../data/too_close/labels/"
-        save_txt = "text.txt"
-        save_conf = False
-        classes = None
-        CSV_destination = "../extras_tailgating/"
-        csv_name = "too_close.csv"
-        detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder)
-        making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder, CSV_destination = CSV_destination+csv_name)
-        b = os.listdir(CSV_destination)[0].split(".")[-1]
-        a = "csv"
-        self.assertEqual(a,b)
-    
     def test_output_of_file(self):
         weights = "../source_tailgating/yolov5s.pt"
         source = "../data/too_close/images" 
@@ -88,15 +62,12 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         for i in column1:
             self.assertEqual(i.split(".")[-1],"jpg")
         for i in column2:
-            i = str(i) 
-            if i == "0":
-                self.assertEqual(i, "0")
-            elif i == "1":
-                self.assertEqual(i, "1")
+            if i== 0 or i==1:
+                pass
             else:
-                raise Exception("The too close value does not have the required 0 or 1 value")                
-            
-    def test_run_and_clear(self):
+                raise Exception("The too close value does not have the required 0 or 1 value")
+
+    def test_output_type(self):
         weights = "../source_tailgating/yolov5s.pt"
         source = "../data/too_close/images" 
         imgsz = 1280 
@@ -109,11 +80,16 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         classes = None
         CSV_destination = "../extras_tailgating/"
         csv_name = "too_close.csv"
+        detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder)
+        making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder, CSV_destination = CSV_destination+csv_name)
+        b = os.listdir(CSV_destination)[0].split(".")[-1]
+        a = "csv"
+        self.assertEqual(a,b)
         for i in os.listdir(output_folder):
             for j in os.listdir(output_folder + "images/"):
                 os.remove(output_folder + "images/" + j)
             for k in os.listdir(output_folder + "labels/"):
                 os.remove(output_folder + "labels/" + k)
         os.remove(CSV_destination+ csv_name)
-        
+
     # TODO: add more tests

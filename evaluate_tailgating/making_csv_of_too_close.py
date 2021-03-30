@@ -18,6 +18,24 @@ def init_args():
     return parser.parse_args()
 
 def making_csv_of_too_close(source_images, source_labels, CSV_destination):
+    """
+    
+
+    Parameters
+    ----------
+    source_images : str
+        DESCRIPTION: Path to the input images
+    source_labels : str
+        DESCRIPTION: path to the output images
+    CSV_destination : str
+        DESCRIPTION: Path of where you wish to save the csv file.
+
+    Returns
+    -------
+    Return a csv with all the frame names along with the values of too close or not. 1 is given if the vehicle is
+    too close. 0 is written if no vehicle is found too close to the vehicle in question. 
+
+    """
     
     # from experimentation setting the coordinates of the bounding box in the form of x1,y1,x2,y2
     box_coordinates = np.array([560,230,730,390])
@@ -33,36 +51,36 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
         dataframe = pd.read_csv(label, sep=" ", header = None)
         names.append(i.split("/")[-1])
         
-        #flag
-        s = 0
+        #condition for closeness
+        found_too_close = 0
         
         for j in range(len(dataframe)):
             
             class_value = dataframe._get_value(j,0)
             if class_value in classes_taken:
-                x_centre = dataframe._get_value(j,1)
-                y_centre = dataframe._get_value(j,2)
-                width = dataframe._get_value(j,3)
-                height = dataframe._get_value(j,4)
+                x_centre_vehicle = dataframe._get_value(j,1)
+                y_centre_vehicle = dataframe._get_value(j,2)
+                width_vehicle = dataframe._get_value(j,3)
+                height_vehicle = dataframe._get_value(j,4)
                 
                 ht,wd = img.shape[0], img.shape[1]
                 
-                x1 = int((x_centre - width/2) *wd)
-                y1 = int((y_centre - height/2) *ht)
+                x1 = int((x_centre_vehicle - width_vehicle/2) *wd)
+                y1 = int((y_centre_vehicle - height_vehicle/2) *ht)
                 
-                x2 = int((x_centre + width/2) * wd)
-                y2 = int((y_centre + height/2) *ht)
+                x2 = int((x_centre_vehicle + width_vehicle/2) * wd)
+                y2 = int((y_centre_vehicle + height_vehicle/2) *ht)
                 
                 if x1 < box_coordinates[0] and y1 < box_coordinates[1] and x2 > box_coordinates[2] and y2 > box_coordinates[3]:
-                    s = 1
+                    found_too_close = 1
                     break
                 else:
-                    s = 0
-            if s==1:
+                    found_too_close = 0
+            if found_too_close==1:
                 break
             else:
                 continue
-        too_close.append(s)
+        too_close.append(found_too_close)
         
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   
     dataframe = pd.DataFrame(dict) 
