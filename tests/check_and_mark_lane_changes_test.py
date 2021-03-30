@@ -62,35 +62,34 @@ class TestMarkingLaneChanges(unittest.TestCase):
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
         save_dir = "../data/results/"
         save_dir_binary = "../data/binary_results/"
-        csv_destination = "../extras/Image_names_and_lane_change_status.csv"
-        loaded_csv = pd.read_csv(csv_destination)
+        csv_destination = "../extras/"
+        csv_name = "Image_names_and_lane_change_status.csv"
+        loaded_csv = pd.read_csv(csv_destination + csv_name)
         column1 = loaded_csv['name_of_img']
         column2 = loaded_csv['lane change (0/1)']
         for i in column1:
             self.assertEqual(i.split(".")[-1],"jpg")
         for i in column2:
-            i = str(i) 
-            if i == "0":
-                self.assertEqual(i, "0")
-            elif i == "1":
-                self.assertEqual(i, "1")
+            if i == 0 or i ==1:
+                pass
             else:
                 raise Exception("The too close value does not have the required 0 or 1 value")
-                
-    def test_run_and_clear(self):
+
+    def test_removal(self):
         img_dir = "../data/frames/*/*"
         src_dir = "../data/clips/"
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
         save_dir = "../data/results/"
         save_dir_binary = "../data/binary_results/"
-        csv_destination = "../extras/Image_names_and_lane_change_status.csv"
+        csv_destination = "../extras/"
+        csv_name = "Image_names_and_lane_change_status.csv"
         for i in os.listdir(src_dir):
             os.remove(src_dir + i)
         for i in os.listdir(save_dir):
             os.remove(save_dir + i)
         for i in os.listdir(save_dir_binary):
             os.remove(save_dir_binary + i) 
-        os.remove(csv_destination)
+        os.remove(csv_destination + csv_name)
     
     # TODO: add more tests
         

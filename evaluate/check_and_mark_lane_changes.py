@@ -40,7 +40,7 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
     names = []
     lane_change = []
     for i in sorted(glob.glob(source_binary)):
-        s = 0
+        lane_change_found = 0
         img = cv2.imread(i,0)
         size = (512,256)
         img = cv2.resize(img, size, interpolation = cv2.INTER_AREA)
@@ -59,12 +59,12 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         name = i.split("/")[-1]
         for j in existing:
             if j == True:
-                s = 1
+                lane_change_found = 1
                 break
             elif j == False:
                 continue
         names.append(name)
-        lane_change.append(s)
+        lane_change.append(lane_change_found)
     dict = {'name_of_img': names, 'lane change (0/1)': lane_change}   
     dataframe = pd.DataFrame(dict)  
         

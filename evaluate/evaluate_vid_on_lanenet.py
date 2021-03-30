@@ -84,7 +84,8 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
 
             image = cv2.imread(image_path, cv2.IMREAD_COLOR)
             image_vis = image
-            image = cv2.resize(image, (512, 256), interpolation=cv2.INTER_LINEAR)
+            size = (512, 256)
+            image = cv2.resize(image, size, interpolation=cv2.INTER_LINEAR)
             image = image / 127.5 - 1.0
 
             t_start = time.time()
