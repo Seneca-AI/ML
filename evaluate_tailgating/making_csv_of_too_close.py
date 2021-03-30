@@ -32,8 +32,8 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
 
     Returns
     -------
-    Return a csv with all the frame names along with the values of too close or not. 1 is given if the vehicle is
-    too close. 0 is written if no vehicle is found too close to the vehicle in question. 
+    Generates a csv with all the frame names along with the values of too close or not. 1 is given if the vehicle is
+    too close. 0 is written if no vehicle is found too close to the vehicle in question.  
 
     """
     
@@ -47,6 +47,7 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     too_close = []
     for i in sorted(glob.glob(source_images)):
         img = cv2.imread(i)
+        height_img,width_img = img.shape[0], img.shape[1]
         label = source_labels +"labels/" +i.split("/")[-1].split(".")[0] + ".txt"
         dataframe = pd.read_csv(label, sep=" ", header = None)
         names.append(i.split("/")[-1])
@@ -63,13 +64,11 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
                 width_vehicle = dataframe._get_value(j,3)
                 height_vehicle = dataframe._get_value(j,4)
                 
-                ht,wd = img.shape[0], img.shape[1]
+                x1 = int((x_centre_vehicle - width_vehicle/2) *width_img)
+                y1 = int((y_centre_vehicle - height_vehicle/2) *height_img)
                 
-                x1 = int((x_centre_vehicle - width_vehicle/2) *wd)
-                y1 = int((y_centre_vehicle - height_vehicle/2) *ht)
-                
-                x2 = int((x_centre_vehicle + width_vehicle/2) * wd)
-                y2 = int((y_centre_vehicle + height_vehicle/2) *ht)
+                x2 = int((x_centre_vehicle + width_vehicle/2) * width_img)
+                y2 = int((y_centre_vehicle + height_vehicle/2) *height_img)
                 
                 if x1 < box_coordinates[0] and y1 < box_coordinates[1] and x2 > box_coordinates[2] and y2 > box_coordinates[3]:
                     found_too_close = 1
