@@ -19,28 +19,33 @@ def init_args():
 
 def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     
-    # from experimentation
-    box2 = np.array([560,230,730,390])
+    # from experimentation setting the coordinates of the bounding box in the form of x1,y1,x2,y2
+    box_coordinates = np.array([560,230,730,390])
     
+    #We have taken classes of 2 (car), 5 (bus), 7 (truck)
     classes_taken = np.array([2,5,7])
+    
     names = []
     too_close = []
     for i in sorted(glob.glob(source_images)):
         img = cv2.imread(i)
         label = source_labels +"labels/" +i.split("/")[-1].split(".")[0] + ".txt"
-        df = pd.read_csv(label, sep=" ", header = None)
+        dataframe = pd.read_csv(label, sep=" ", header = None)
         names.append(i.split("/")[-1])
+        
+        #flag
         s = 0
-        for j in range(len(df)):
+        
+        for j in range(len(dataframe)):
             
-            class_value = df._get_value(j,0)
+            class_value = dataframe._get_value(j,0)
             if class_value in classes_taken:
-                x_centre = df._get_value(j,1)
-                y_centre = df._get_value(j,2)
-                width = df._get_value(j,3)
-                height = df._get_value(j,4)
+                x_centre = dataframe._get_value(j,1)
+                y_centre = dataframe._get_value(j,2)
+                width = dataframe._get_value(j,3)
+                height = dataframe._get_value(j,4)
                 
-                ht,wd,_ = img.shape[0], img.shape[1], img.shape[2]
+                ht,wd = img.shape[0], img.shape[1]
                 
                 x1 = int((x_centre - width/2) *wd)
                 y1 = int((y_centre - height/2) *ht)
@@ -48,7 +53,7 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
                 x2 = int((x_centre + width/2) * wd)
                 y2 = int((y_centre + height/2) *ht)
                 
-                if x1 < box2[0] and y1 < box2[1] and x2 > box2[2] and y2 > box2[3]:
+                if x1 < box_coordinates[0] and y1 < box_coordinates[1] and x2 > box_coordinates[2] and y2 > box_coordinates[3]:
                     s = 1
                     break
                 else:
@@ -58,13 +63,11 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
             else:
                 continue
         too_close.append(s)
+        
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   
-    df = pd.DataFrame(dict) 
-    df.to_csv(CSV_destination)
+    dataframe = pd.DataFrame(dict) 
+    dataframe.to_csv(CSV_destination)
 
 if __name__ == '__main__':
     args = init_args()
     making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
-
-
-

@@ -34,18 +34,18 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
         DESCRIPTION: Address of the yolo weights
     source : str
         DESCRIPTION: Address of the images
-    img-size : int
+    img_size : int
         DESCRIPTION: size of the images
-    conf-thres : float
+    conf_thres : float
         DESCRIPTION: object confidence threshold
-    iou-thres : float
+    iou_thres : float
         DESCRIPTION: IOU threshold for NMS
     device : int
         DESCRIPTION: -1 for cpu, 0 or 1 for gpu
-    save-txt : str
+    save_txt : str
         DESCRIPTION: save results to *.txt
-    save-conf : Bool
-        DESCRIPTION: save confidences in --save-txt labels
+    save_conf : bool
+        DESCRIPTION: save confidences in --save_txt labels
     classes : int
         DESCRIPTION: These are the classes you wish to obtain. Leave blank for all
     output_folder : str
@@ -56,8 +56,7 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
     Saves labels of all classes and images along with detected objects
 
     """
-    
-    source, weights, save_txt, imgsz = source, weights, save_txt, img_size
+    imgsz = img_size
 
     # Directories
     save_dir =Path(output_folder)
