@@ -84,6 +84,8 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   
     dataframe = pd.DataFrame(dict) 
     dataframe.to_csv(CSV_destination)
+    
+    #TODO Add exception and error handling
 
 if __name__ == '__main__':
     args = init_args()

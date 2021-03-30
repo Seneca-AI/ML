@@ -24,6 +24,7 @@ from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 
 def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
+    #TODO Add exception and error handling
     
     """
     This function is used for finding the various vehicles and get their coordinates.
