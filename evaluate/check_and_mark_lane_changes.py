@@ -45,7 +45,8 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         size = (512,256)
         img = cv2.resize(img, size, interpolation = cv2.INTER_AREA)
         
-        # from experimentation these are the values of the BBOX
+        # from experimentation these are the values of the Bounding Box
+        # Any value of the lane inside the Bounding Box is taken as an instance of lane change
         X1 = int(img.shape[1]*1/4)+2
         X2 = int(img.shape[1]*3/4)
         Y1 = 211 
@@ -65,10 +66,10 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         names.append(name)
         lane_change.append(s)
     dict = {'name_of_img': names, 'lane change (0/1)': lane_change}   
-    df = pd.DataFrame(dict)  
+    dataframe = pd.DataFrame(dict)  
         
     # saving the dataframe  
-    df.to_csv(CSV_destination)
+    dataframe.to_csv(CSV_destination)
 
 if __name__ == '__main__':
     args = init_args()

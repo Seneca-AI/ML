@@ -16,9 +16,7 @@ import sys
 import os
 sys.path.append("../")
 import glob
-from utils.converting_frames_to_vids import frame_to_vids
-from utils.making_concurrent_frames_Tusimple import renaming_padding_if_in_folder_names
-from utils.converting_video_to_frames import video_to_frames
+from utils.making_concurrent_frames_tusimple import renaming_padding_if_in_folder_names
 from evaluate.evaluate_vid_on_lanenet import evaluate_vid_on_lanenet
 
 class TestEvaluatingVidOnLanenet(unittest.TestCase):
