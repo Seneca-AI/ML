@@ -20,7 +20,6 @@ from numpy import random
 import os
 import sys
 sys.path.append("../")
-from evaluate_tailgating.yolov5_inference import detect
 from evaluate_tailgating.making_csv_of_too_close import making_csv_of_too_close
 import pandas as pd
 
@@ -33,16 +32,16 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         conf_thres = 0.25
         iou_thres = 0.45
         device = ""
-        output_folder = "../data/too_close/labels/"
+        output_folder = "../data/delete/too_close/labels/"
         save_txt = "text.txt"
         save_conf = False
         classes = None
-        CSV_destination = "../extras_tailgating/"
+        CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
-        detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder)
         actual = making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder , CSV_destination = CSV_destination+csv_name)
         self.assertIsNone(actual)
-
+        
+        # testing the values of csv
     def test_output_of_file(self):
         weights = "../source_tailgating/yolov5s.pt"
         source = "../data/too_close/images" 
@@ -54,7 +53,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         save_txt = "text.txt"
         save_conf = False
         classes = None
-        CSV_destination = "../extras_tailgating/"
+        CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
         loaded_csv = pd.read_csv(CSV_destination+csv_name)
         column1 = loaded_csv['name_of_img']
@@ -78,13 +77,11 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         save_txt = "text.txt"
         save_conf = False
         classes = None
-        CSV_destination = "../extras_tailgating/"
+        CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
-        detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder)
-        making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder, CSV_destination = CSV_destination+csv_name)
-        b = os.listdir(CSV_destination)[0].split(".")[-1]
-        a = "csv"
-        self.assertEqual(a,b)
+        actual_extension = os.listdir(CSV_destination)[0].split(".")[-1]
+        expected_extension = "csv"
+        self.assertEqual(expected_extension,actual_extension)
         for i in os.listdir(output_folder):
             for j in os.listdir(output_folder + "images/"):
                 os.remove(output_folder + "images/" + j)

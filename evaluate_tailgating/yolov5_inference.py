@@ -22,7 +22,6 @@ from utils.general import check_img_size, non_max_suppression, apply_classifier,
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
-
 def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
     #TODO Add exception and error handling
     
