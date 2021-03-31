@@ -16,17 +16,18 @@ import sys
 import os
 sys.path.append("../")
 import glob
-from utils.making_concurrent_frames_tusimple import renaming_padding_if_in_folder_names
 from evaluate.evaluate_vid_on_lanenet import evaluate_vid_on_lanenet
+import cv2
+import glob
+import numpy as np
 
 class TestEvaluatingVidOnLanenet(unittest.TestCase):
     
     def test_output(self):
-        img_dir = "../data/frames/*/*"
         src_dir = "../data/clips/"
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
-        save_dir = "../data/results/"
-        save_dir_binary = "../data/binary_results/"
+        save_dir = "../data/delete/results/"
+        save_dir_binary = "../data/delete/binary_results/"
         if os.path.exists(save_dir):
             pass
         else:
@@ -35,21 +36,31 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
             pass
         else:
             os.mkdir(save_dir_binary)
-        renaming_padding_if_in_folder_names(Source = img_dir,Dest = src_dir)
         actual = evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary)
         self.assertIsNone(actual)
         
     def test_output_type(self):
-        img_dir = "../data/frames/*/*"
         src_dir = "../data/clips/"
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
-        save_dir = "../data/results/"
-        save_dir_binary = "../data/binary_results/"
-        b = os.listdir(save_dir_binary)[0].split(".")[-1]
-        a = "jpg"
-        self.assertEqual(a,b)
-        for i in os.listdir(src_dir):
-            os.remove(src_dir + i)
+        save_dir = "../data/delete/results/"
+        save_dir_binary = "../data/delete/binary_results/"
+        actual_extension = os.listdir(save_dir_binary)[0].split(".")[-1]
+        expected_extension = "jpg"
+        self.assertEqual(expected_extension,actual_extension)
+        
+        # checks if the all images are having specified values(binary images) or not
+    def test_output_value(self):
+        src_dir = "../data/clips/"
+        weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
+        save_dir = "../data/delete/results/"
+        save_dir_binary = "../data/delete/binary_results/"
+        for i in glob.glob(save_dir_binary + "*"):
+            img = cv2.imread(i)
+            len_of_unique_values = len(np.unique(img))
+            if len_of_unique_values > 30: # normal image have more than 100 values. Binary image made by lanenet has less than 20 values
+                raise Exception("The images have way too many values to be a binary image")
+            else:
+                pass
         for i in os.listdir(save_dir):
             os.remove(save_dir + i)
         for i in os.listdir(save_dir_binary):
