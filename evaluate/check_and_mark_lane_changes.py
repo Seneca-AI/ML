@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import glob
 import pandas as pd
 import argparse
+import warnings
 
 def init_args():
     parser = argparse.ArgumentParser()
@@ -40,8 +41,17 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
     names = []
     lane_change = []
     for i in sorted(glob.glob(source_binary)):
+        
         lane_change_found = 0
         img = cv2.imread(i,0)
+        if len(np.unique(img)) < 30:
+            pass
+        else:
+            warnings.warn("The given image might not be a binary image as the number of values in the image is more than 30")
+        if img is None:
+            raise ValueError("The given directory of the binary images may not be correct.")
+        else:
+            pass
         size = (512,256)
         img = cv2.resize(img, size, interpolation = cv2.INTER_AREA)
         

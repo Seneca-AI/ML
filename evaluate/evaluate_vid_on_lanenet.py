@@ -56,7 +56,27 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     assert ops.exists(src_dir), '{:s} not exist'.format(src_dir)
 
     os.makedirs(save_dir, exist_ok=True)
+    
+    assert ops.exists(save_dir_binary), '{:s} not exist'.format(save_dir_binary)
 
+    os.makedirs(save_dir_binary, exist_ok=True)
+    
+    if os.path.exists(src_dir):
+        pass
+    else:
+        raise ValueError("The required input images are not present. Please recheck the input image source")
+    check_img = glob.glob(src_dir + "/*")
+    for i in check_img:
+        if i.split("/")[-1].split(".")[1] == "jpg":
+            pass
+        else:
+            raise ValueError("Please check the input source. They might not have jpg files")
+    
+    if os.path.exists(weights_path + ".index"):
+        pass
+    else:
+        raise ValueError("The required weight files are not present at the given directory. Please recheck the weights path")
+        
     input_tensor = tf.placeholder(dtype=tf.float32, shape=[1, 256, 512, 3], name='input_tensor')
 
     net = lanenet.LaneNet(phase='test', cfg=CFG)
