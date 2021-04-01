@@ -13,6 +13,7 @@ import torch
 from numpy import random
 import os
 import sys
+import warnings
 sys.path.append("../source_tailgating")
 
 from models.experimental import attempt_load
@@ -56,6 +57,42 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
     Saves labels of all classes and images along with detected objects
 
     """
+    # warnings and valueerrors
+    if os.path.exists(weights):
+        pass
+    else:
+        raise ValueError("yolov5 weights are missing")
+    
+    for i in os.listdir(source):
+        if i.split("/")[-1].split(".")[-1] == "jpg" or "png":
+            pass
+        else:
+            raise ValueError("The given source directory might not be having jpg images")
+    
+    if img_size == 1280:
+        pass
+    else:
+        raise ValueError("keep the image size fixed at 1280 as the next steps have been fixed keeping in mind this size")
+        
+    if conf_thres<1 and conf_thres>0:
+        if conf_thres <0.30 and conf_thres> 0.20:
+            pass
+        else:
+            warnings.warn("The confidence threshold you have taken may include either too many false positives or too few objects. Ideal Value is between 0.24 and 0.26 for COCO dataset.")
+    else:
+        raise ValueError("Confidence threshold can only have values between 0 and 1")
+    
+    if iou_thres<1 and iou_thres>0:
+        pass
+    else:
+        raise ValueError("Intersection over union threshold can only have values between 0 and 1")
+    
+    if device == "-1" or "0" or "1" or "2" or "3" or "4" or "5" or "6" or "7" or "cpu":
+        pass
+    else:
+        raise ValueError("The acceptable values are '-1', '0', '1', '2', '3', '4', '5', '6', '7' or 'cpu'")
+
+    # program starts
     imgsz = img_size
 
     # Directories

@@ -6,7 +6,7 @@ We have taken classes of 2 (car), 5 (bus), 7 (truck)
 """
 import cv2
 import numpy as np
-import glob
+import glob,os
 import pandas as pd
 import argparse
 
@@ -36,6 +36,13 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     too close. 0 is written if no vehicle is found too close to the vehicle in question.  
 
     """
+    # errors and exceptions
+    for i in glob.glob(source_images):
+        if os.path.exists(source_labels + "labels/"+i.split("/")[-1].split(".")[0] + ".txt"):
+            pass
+        else:
+            raise ValueError("one or more of the images do not have the txt files associated with them.")
+        
     
     # from experimentation setting the coordinates of the bounding box in the form of x1,y1,x2,y2
     box_coordinates = np.array([560,230,730,390])
