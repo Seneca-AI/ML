@@ -43,7 +43,7 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
         else:
             raise ValueError("one or more of the images do not have the txt files associated with them.")
         
-    
+    # Function starts
     # from experimentation setting the coordinates of the bounding box in the form of x1,y1,x2,y2
     box_coordinates = np.array([560,230,730,390])
     
@@ -91,8 +91,6 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   
     dataframe = pd.DataFrame(dict) 
     dataframe.to_csv(CSV_destination)
-    
-    #TODO Add exception and error handling
 
 if __name__ == '__main__':
     args = init_args()

@@ -24,7 +24,6 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
-    #TODO Add exception and error handling
     
     """
     This function is used for finding the various vehicles and get their coordinates.
@@ -92,7 +91,7 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
     else:
         raise ValueError("The acceptable values are '-1', '0', '1', '2', '3', '4', '5', '6', '7' or 'cpu'")
 
-    # program starts
+    # Function starts
     imgsz = img_size
 
     # Directories
