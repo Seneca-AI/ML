@@ -51,23 +51,19 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     Returns
     -------
     Images with lanes marked on them in the save_dir folder and binary results in the save_dir_binary folder
-
     """
     # Errors and exceptions
-    if os.path.exists(src_dir):
-        pass
-    else:
+    if not os.path.exists(src_dir):
         raise ValueError("The required input images are not present. Please recheck the input image source")
+    
+    # TODO: check the length of lists here
     check_img = glob.glob(src_dir + "/*")
     for i in check_img:
-        if i.split("/")[-1].split(".")[1] == "jpg" or "png":
-            pass
-        else:
+        img_extension = str(i.split("/")[-1].split(".")[1])
+        if img_extension != "jpg" and "png":
             raise ValueError("Please check the input source. They might not have jpg or png files")
     
-    if os.path.exists(weights_path + ".index"):
-        pass
-    else:
+    if not os.path.exists(weights_path + ".index"):
         raise ValueError("The required weight files are not present at the given directory. Please recheck the weights path")
     
     # programme begins
@@ -106,9 +102,9 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
 
             image = cv2.imread(image_path, cv2.IMREAD_COLOR)
             image_vis = image
-            size = (512, 256)
+            size = (512, 256) # chosen sizes for LaneNet (Width, Height)
             image = cv2.resize(image, size, interpolation=cv2.INTER_LINEAR)
-            image = image / 127.5 - 1.0
+            image = image / 127.5 - 1.0 # normalizing the pixel values
 
             t_start = time.time()
             binary_seg_image, instance_seg_image = sess.run(

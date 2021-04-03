@@ -42,23 +42,19 @@ class TestMarkingLaneChanges(unittest.TestCase):
         expected_name = csv_name
         self.assertEqual(expected_name,actual_name)
         
-        # checks if the values of the csv are either 0/1 or something else
+    # checks if the values of the csv are correct or not
     def test_output_value(self):
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
         binary_imgs_directory = "../data/binary_results/"
         csv_destination = "../data/delete/csv/"
         csv_name = "Image_names_and_lane_change_status.csv"
         loaded_csv = pd.read_csv(csv_destination + csv_name)
-        column1 = loaded_csv['name_of_img']
-        column2 = loaded_csv['lane change (0/1)']
-        for i in column1:
-            self.assertEqual(i.split(".")[-1],"jpg")
-        for i in column2:
-            if i == 0 or i ==1:
-                pass
-            else:
-                raise Exception("The too close value does not have the required 0 or 1 value")
+        column1_expected = ["00021.jpg", "00022.jpg", "00051.jpg", "00052.jpg", "00259.jpg"]
+        column1 = loaded_csv['name_of_img'].values.tolist()
+        column2_expected = [0, 0, 0, 0, 1]
+        column2 = loaded_csv['lane change (0/1)'].values.tolist()
+        self.assertEqual(column1, column1_expected)
+        self.assertEqual(column2, column2_expected)
         os.remove(csv_destination + csv_name)
-    
     # TODO: add more tests
         

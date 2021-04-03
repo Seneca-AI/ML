@@ -48,7 +48,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         expected_extension = "jpg"
         self.assertEqual(expected_extension,actual_extension)
         
-        # checks if the all images are having specified values(binary images) or not
+    # checks if the all images are having specified values(binary images) or not
     def test_output_value(self):
         src_dir = "../data/clips/"
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
@@ -59,8 +59,6 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
             len_of_unique_values = len(np.unique(img))
             if len_of_unique_values > 30: # normal image have more than 100 values. Binary image made by lanenet has less than 20 values
                 raise Exception("The images have way too many values to be a binary image")
-            else:
-                pass
         for i in os.listdir(save_dir):
             os.remove(save_dir + i)
         for i in os.listdir(save_dir_binary):

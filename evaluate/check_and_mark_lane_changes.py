@@ -50,8 +50,6 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
             warnings.warn("The given image might not be a binary image as the number of values in the image is more than 30")
         if img is None:
             raise ValueError("The given directory of the binary images may not be correct.")
-        else:
-            pass
         size = (512,256)
         img = cv2.resize(img, size, interpolation = cv2.INTER_AREA)
         
@@ -59,20 +57,18 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         # Any value of the lane inside the Bounding Box is taken as an instance of lane change
         X1 = int(img.shape[1]*1/4)+2
         X2 = int(img.shape[1]*3/4)
-        Y1 = 211 
+        Y1 = 211 #pixel value from experimentation
         Y2 = len(img)
         
         cropped_area = img[Y1:Y2,X1:X2]
         unique_array = np.unique(cropped_area)
-        lane_values = [250,251,252,253,254,255] 
+        lane_values = [250,251,252,253,254,255] # values of the lane given by laneNet
         existing = np.isin(lane_values, unique_array)
         name = i.split("/")[-1]
         for j in existing:
             if j == True:
                 lane_change_found = 1
                 break
-            elif j == False:
-                continue
         names.append(name)
         lane_change.append(lane_change_found)
     dict = {'name_of_img': names, 'lane change (0/1)': lane_change}   
