@@ -1,0 +1,6 @@
+*/__pycache__
+BiseNetV2_LaneNet_Tusimple_Model_Weights/
+*/log/
+source/
+evaluate/*
+extras/*

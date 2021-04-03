@@ -26,13 +26,14 @@ def video_to_frames(input_loc, output_loc):
     Returns:
         None
     """
-    try:
-        os.mkdir(output_loc)
-    except OSError as ex:
-        if ex.errno != errno.EEXIST:
-            raise
-        pass
+    # Warnings and errors
+    if not os.path.exists(input_loc):
+        raise ValueError("The required vid is not present. Please recheck the input vid source.")
     
+    #Function starts
+    if not os.path.exists(output_loc):
+        os.mkdir(output_loc)
+        
     time_start = time.time()
     video_capture = cv2.VideoCapture(input_loc)
     frame_count = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
