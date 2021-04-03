@@ -21,6 +21,7 @@ import os
 import sys
 sys.path.append("../")
 from evaluate_tailgating.yolov5_inference import detect
+import filecmp
 
 class TestEvaluatingVidOnLanenet(unittest.TestCase):
     
@@ -38,18 +39,12 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         actual = detect(weights, source, imgsz, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder)
         self.assertIsNone(actual)
         
-        # this test is used for checking if all the images have got their text files (the vehicle labels) or not. It gives error if any of the images do not have their txt files.
+    # this test is used for checking if all the images have got their text files (the vehicle labels) or not. 
+    # It gives error if any of the images do not have their txt files.
     def test_output_type(self):
-        weights = "../source_tailgating/yolov5s.pt"
-        source = "../data/too_close/images" 
-        imgsz = 1280 
-        conf_thres = 0.25
-        iou_thres = 0.45
-        device = "0"
+        source = "../data/too_close/images"
         output_folder = "../data/delete/too_close/labels/"
         save_txt = "text.txt"
-        save_conf = False
-        classes = None
         names_of_texts = []
         for i in glob.glob(source + "/*"):
             names_of_texts.append(i.split("/")[-1].split(".")[0] + ".txt")
@@ -59,6 +54,26 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
             expected_labels.append(i.split("/")[-1])
         expected_labels = sorted(expected_labels)
         self.assertEqual(names_of_texts,expected_labels)
+
+    def test_output_value(self):
+        source = "../data/too_close/images"
+        output_folder = "../data/delete/too_close/labels/"
+        labels_output_directory = "../data/delete/too_close/labels/labels/*"
+        labels_directory = "../data/labels/"
+        a = glob.glob(labels_directory+ "*")
+        b = glob.glob(output_folder + "labels/*")
+        for i in a:
+            for j in b:
+                f1 = open(i, "r")
+                f2 = open(j, "r")
+                for line1,line2 in zip(f1,f2): 
+                    if line1 == line2: 
+                        continue
+                    else: 
+                        # print(line1 + line2) 
+                        break 
+                f1.close() 
+                f2.close()
         for i in os.listdir(output_folder):
             for j in os.listdir(output_folder + "images/"):
                 os.remove(output_folder + "images/" + j)

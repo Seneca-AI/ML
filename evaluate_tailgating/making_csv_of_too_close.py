@@ -19,25 +19,25 @@ def init_args():
 
 def making_csv_of_too_close(source_images, source_labels, CSV_destination):
     """
-    
-
     Parameters
     ----------
     source_images : str
         DESCRIPTION: Path to the input images
     source_labels : str
-        DESCRIPTION: path to the output images
+        DESCRIPTION: path to the input txt labels having the coordinates of the vehicles detected
     CSV_destination : str
         DESCRIPTION: Path of where you wish to save the csv file.
 
     Returns
     -------
-    Generates a csv with all the frame names along with the values of too close or not. 1 is given if the vehicle is
-    too close. 0 is written if no vehicle is found too close to the vehicle in question.  
+    Generates a csv with all the frame names along with the values of too close or not. 
+    1 is given if the vehicle is too close. 
+    0 is written if no vehicle is found too close to the vehicle in question.  
 
     """
     # errors and exceptions
     for i in glob.glob(source_images):
+        # TODO: Check the length of the lists wherever they are accessed.
         if os.path.exists(source_labels + "labels/"+i.split("/")[-1].split(".")[0] + ".txt"):
             pass
         else:
@@ -58,12 +58,9 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
         label = source_labels +"labels/" +i.split("/")[-1].split(".")[0] + ".txt"
         dataframe = pd.read_csv(label, sep=" ", header = None)
         names.append(i.split("/")[-1])
-        
-        #condition for closeness
-        found_too_close = 0
-        
         for j in range(len(dataframe)):
-            
+            #condition for closeness
+            found_too_close = 0
             class_value = dataframe._get_value(j,0)
             if class_value in classes_taken:
                 x_centre_vehicle = dataframe._get_value(j,1)
@@ -80,12 +77,6 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
                 if x1 < box_coordinates[0] and y1 < box_coordinates[1] and x2 > box_coordinates[2] and y2 > box_coordinates[3]:
                     found_too_close = 1
                     break
-                else:
-                    found_too_close = 0
-            if found_too_close==1:
-                break
-            else:
-                continue
         too_close.append(found_too_close)
         
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   

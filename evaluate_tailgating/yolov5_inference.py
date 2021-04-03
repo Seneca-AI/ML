@@ -24,10 +24,8 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
 
 def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
-    
     """
     This function is used for finding the various vehicles and get their coordinates.
-
     Parameters
     ----------
     weights : str
@@ -57,39 +55,32 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
 
     """
     # warnings and valueerrors
-    if os.path.exists(weights):
-        pass
-    else:
+    if not os.path.exists(weights):
         raise ValueError("yolov5 weights are missing")
     
     for i in os.listdir(source):
-        if i.split("/")[-1].split(".")[-1] == "jpg" or "png":
-            pass
-        else:
+        if i.split("/")[-1].split(".")[-1] != "jpg" and "png":
             raise ValueError("The given source directory might not be having jpg images")
     
-    if img_size == 1280:
-        pass
-    else:
-        raise ValueError("keep the image size fixed at 1280 as the next steps have been fixed keeping in mind this size")
+    if img_size != 1280:
+        raise ValueError("""keep the image size fixed at 1280 as the next steps \n
+                         have been fixed keeping in mind this size""")
         
     if conf_thres<1 and conf_thres>0:
         if conf_thres <0.30 and conf_thres> 0.20:
             pass
         else:
-            warnings.warn("The confidence threshold you have taken may include either too many false positives or too few objects. Ideal Value is between 0.24 and 0.26 for COCO dataset.")
+            warnings.warn("""The confidence threshold you have taken may include
+            either too many false positives or too few objects. Ideal 
+            Value is between 0.24 and 0.26 for COCO dataset.""")
     else:
         raise ValueError("Confidence threshold can only have values between 0 and 1")
     
-    if iou_thres<1 and iou_thres>0:
-        pass
-    else:
+    if iou_thres>1 or iou_thres<0:
         raise ValueError("Intersection over union threshold can only have values between 0 and 1")
     
-    if device == "-1" or "0" or "1" or "2" or "3" or "4" or "5" or "6" or "7" or "cpu":
-        pass
-    else:
-        raise ValueError("The acceptable values are '-1', '0', '1', '2', '3', '4', '5', '6', '7' or 'cpu'")
+    if device != '-1' and device !='0' and device != '1' and device!= "cpu":
+        raise ValueError("The acceptable values are '-1', '0', '1' or 'cpu'")
 
     # Function starts
     imgsz = img_size

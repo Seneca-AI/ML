@@ -41,7 +41,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         actual = making_csv_of_too_close(source_images = source + "/*", source_labels = output_folder , CSV_destination = CSV_destination+csv_name)
         self.assertIsNone(actual)
         
-        # testing the values of csv
+    # testing the values of csv
     def test_output_of_file(self):
         weights = "../source_tailgating/yolov5s.pt"
         source = "../data/too_close/images" 
@@ -56,15 +56,12 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
         loaded_csv = pd.read_csv(CSV_destination+csv_name)
-        column1 = loaded_csv['name_of_img']
-        column2 = loaded_csv['too close (0/1)']
-        for i in column1:
-            self.assertEqual(i.split(".")[-1],"jpg")
-        for i in column2:
-            if i== 0 or i==1:
-                pass
-            else:
-                raise Exception("The too close value does not have the required 0 or 1 value")
+        column1 = loaded_csv['name_of_img'].values.tolist()
+        column2 = loaded_csv['too close (0/1)'].values.tolist()
+        expected_column1 = ["1492636597661530888.jpg", "1492637188172803505.jpg", "1492637289078643492.jpg", "1492637368864044659.jpg", "1494452621490750553.jpg", "1494453387654539706.jpg", "1494453509599288732.jpg"]
+        expected_column2 = [0,0,1,1,1,0,0]
+        self.assertEqual(column1, expected_column1)
+        self.assertEqual(column2, expected_column2)
 
     def test_output_type(self):
         weights = "../source_tailgating/yolov5s.pt"
@@ -80,6 +77,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
         actual_extension = os.listdir(CSV_destination)[0].split(".")[-1]
+        #TODO: add checking the length of the lists
         expected_extension = "csv"
         self.assertEqual(expected_extension,actual_extension)
         for i in os.listdir(output_folder):
