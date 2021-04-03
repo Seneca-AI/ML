@@ -32,7 +32,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         conf_thres = 0.25
         iou_thres = 0.45
         device = ""
-        output_folder = "../data/delete/too_close/labels/"
+        output_folder = "../data/labels/"
         save_txt = "text.txt"
         save_conf = False
         classes = None
@@ -49,7 +49,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         conf_thres = 0.25
         iou_thres = 0.45
         device = ""
-        output_folder = "../data/too_close/labels/"
+        output_folder = "../data/labels/"
         save_txt = "text.txt"
         save_conf = False
         classes = None
@@ -70,7 +70,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         conf_thres = 0.25
         iou_thres = 0.45
         device = ""
-        output_folder = "../data/too_close/labels/"
+        output_folder = "../data/labels/"
         save_txt = "text.txt"
         save_conf = False
         classes = None
@@ -80,11 +80,6 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         #TODO: add checking the length of the lists
         expected_extension = "csv"
         self.assertEqual(expected_extension,actual_extension)
-        for i in os.listdir(output_folder):
-            for j in os.listdir(output_folder + "images/"):
-                os.remove(output_folder + "images/" + j)
-            for k in os.listdir(output_folder + "labels/"):
-                os.remove(output_folder + "labels/" + k)
         os.remove(CSV_destination+ csv_name)
 
     # TODO: add more tests
