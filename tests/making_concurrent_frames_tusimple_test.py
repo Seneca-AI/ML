@@ -1,7 +1,7 @@
 """
 CLI
 1. cd testing
-2. python -m unittest making_concurrent_frames_tusimple_test.py
+2. python3 -m unittest making_concurrent_frames_tusimple_test.py
 The output should be
 .
 ----------------------------------------------------------------------
@@ -22,17 +22,17 @@ class TestMakingConcurrentFrames(unittest.TestCase):
     
     def test_output(self):
         source_dataset = "../data/frames/*/*"
-        output_images = "../data/delete/clips/"
+        output_images = "../data/delete/"
         actual = renaming_padding_if_in_folder_names(Source = source_dataset,Dest = output_images)
         self.assertIsNotNone(actual)
             
     def test_output_values(self):
         source_dataset = "../data/frames/*/*"
-        output_images = "../data/delete/clips/"
-        b = os.listdir(output_images)
-        a = ['21.jpg', '22.jpg', '51.jpg', '52.jpg']
+        output_images = "../data/delete/"
+        b = sorted(os.listdir(output_images))
+        a = ['.gitignore','21.jpg', '22.jpg', '51.jpg', '52.jpg']
         self.assertEqual(a,b)
-        for i in os.listdir(output_images):
-            os.remove(output_images + i)
+        for i in glob.glob(output_images + "*.jpg"):
+            os.remove(i)
     
     # TODO: add more tests

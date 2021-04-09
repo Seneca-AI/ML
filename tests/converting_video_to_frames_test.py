@@ -1,7 +1,7 @@
 """
 CLI
 1. cd testing
-2. python -m unittest converting_video_to_frames_test.py
+2. python3 -m unittest converting_video_to_frames_test.py
 The output should be
 .
 ----------------------------------------------------------------------
@@ -23,18 +23,18 @@ class TestVidsToFrames(unittest.TestCase):
     def test_output(self):
         input_vid = "clip1.avi"
         input_vid_location = "../data/vid/"
-        output_images_from_vid = "../data/delete/extracted_frames"
+        output_images_from_vid = "../data/delete"
         actual = video_to_frames(input_loc = input_vid_location + input_vid, output_loc = output_images_from_vid + "/")
         self.assertIsNone(actual)
         
     def test_output_values(self):
         input_vid = "clip1.avi"
         input_vid_location = "../data/vid/"
-        output_images_from_vid = "../data/delete/extracted_frames"
-        actual_outputs = os.listdir(output_images_from_vid)
-        expected = ["00001.jpg", '00002.jpg', '00003.jpg']
+        output_images_from_vid = "../data/delete"
+        actual_outputs = sorted(os.listdir(output_images_from_vid))
+        expected = ['.gitignore',"00001.jpg", '00002.jpg', '00003.jpg']
         self.assertEqual(expected,actual_outputs)
-        for i in os.listdir(output_images_from_vid):
-            os.remove(output_images_from_vid +"/"+i)
+        for i in glob.glob(output_images_from_vid + "/*.jpg"):
+            os.remove(i)
     
     # TODO: add more tests
