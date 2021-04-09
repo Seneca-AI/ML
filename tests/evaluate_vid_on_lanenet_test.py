@@ -2,6 +2,7 @@
 CLI
 1. cd testing
 2. python3 -m unittest evaluate_vid_on_lanenet_test.py
+
 The output should be
 .
 ----------------------------------------------------------------------
@@ -59,9 +60,9 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
             len_of_unique_values = len(np.unique(img))
             if len_of_unique_values > 30: # normal image have more than 100 values. Binary image made by lanenet has less than 20 values
                 raise Exception("The images have way too many values to be a binary image")
+
         for i in glob.glob(save_dir + "*.jpg"):
             os.remove(i)
         for i in glob.glob(save_dir_binary + "*.jpg"):
-            os.remove(i) 
-        
+            os.remove(i)         
     # TODO: add more tests

@@ -57,4 +57,3 @@ class TestMarkingLaneChanges(unittest.TestCase):
         self.assertEqual(column2, column2_expected)
         os.remove(csv_destination + csv_name)
     # TODO: add more tests
-        
