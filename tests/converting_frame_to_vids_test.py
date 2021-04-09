@@ -33,7 +33,7 @@ class TestFrameToVids(unittest.TestCase):
         output_vid_location = "../data/delete/vid/"
         actual_output = os.listdir(output_vid_location)[1]
         expected = "clip1.avi"
-        self.assertIn(expected, actual_output)
+        self.assertEqual(expected, actual_output)
         os.remove(output_vid_location + output_vid)
     
     # TODO: add more tests
