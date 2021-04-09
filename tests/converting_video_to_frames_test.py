@@ -23,14 +23,14 @@ class TestVidsToFrames(unittest.TestCase):
     def test_output(self):
         input_vid = "clip1.avi"
         input_vid_location = "../data/vid/"
-        output_images_from_vid = "../data/delete"
+        output_images_from_vid = "../data/delete/clips"
         actual = video_to_frames(input_loc = input_vid_location + input_vid, output_loc = output_images_from_vid + "/")
         self.assertIsNone(actual)
         
     def test_output_values(self):
         input_vid = "clip1.avi"
         input_vid_location = "../data/vid/"
-        output_images_from_vid = "../data/delete"
+        output_images_from_vid = "../data/delete/clips"
         actual_outputs = sorted(os.listdir(output_images_from_vid))
         expected = ['.gitignore',"00001.jpg", '00002.jpg', '00003.jpg']
         self.assertEqual(expected,actual_outputs)

@@ -22,13 +22,13 @@ class TestMakingConcurrentFrames(unittest.TestCase):
     
     def test_output(self):
         source_dataset = "../data/frames/*/*"
-        output_images = "../data/delete/"
+        output_images = "../data/delete/ordered_frames/"
         actual = renaming_padding_if_in_folder_names(Source = source_dataset,Dest = output_images)
         self.assertIsNotNone(actual)
             
     def test_output_values(self):
         source_dataset = "../data/frames/*/*"
-        output_images = "../data/delete/"
+        output_images = "../data/delete/ordered_frames/"
         b = sorted(os.listdir(output_images))
         a = ['.gitignore','21.jpg', '22.jpg', '51.jpg', '52.jpg']
         self.assertEqual(a,b)
