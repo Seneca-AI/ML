@@ -31,7 +31,7 @@ class TestFrameToVids(unittest.TestCase):
         input_images = "../data/clips/"
         output_vid = "clip1.avi"
         output_vid_location = "../data/delete/vid/"
-        actual_output = os.listdir(output_vid_location)[1]
+        actual_output = sorted(os.listdir(output_vid_location))[1]
         expected = "clip1.avi"
         self.assertEqual(expected, actual_output)
         os.remove(output_vid_location + output_vid)
