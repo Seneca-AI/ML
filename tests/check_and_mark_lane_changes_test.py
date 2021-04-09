@@ -1,7 +1,7 @@
 """
 CLI
 1. cd testing
-2. python -m unittest check_and_mark_lane_changes_test.py
+2. python3 -m unittest check_and_mark_lane_changes_test.py
 The output should be
 .
 ----------------------------------------------------------------------
@@ -38,7 +38,7 @@ class TestMarkingLaneChanges(unittest.TestCase):
         binary_imgs_directory = "../data/binary_results/"
         csv_destination = "../data/delete/csv/"
         csv_name = "Image_names_and_lane_change_status.csv"
-        actual_name = os.listdir(csv_destination)[0]
+        actual_name = os.listdir(csv_destination)[1]
         expected_name = csv_name
         self.assertEqual(expected_name,actual_name)
         

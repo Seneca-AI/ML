@@ -1,7 +1,7 @@
 """
 CLI
 1. cd testing
-2. python -m unittest evaluate_vid_on_lanenet_test.py
+2. python3 -m unittest evaluate_vid_on_lanenet_test.py
 The output should be
 .
 ----------------------------------------------------------------------
@@ -44,7 +44,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
         save_dir = "../data/delete/results/"
         save_dir_binary = "../data/delete/binary_results/"
-        actual_extension = os.listdir(save_dir_binary)[0].split(".")[-1]
+        actual_extension = os.listdir(save_dir_binary)[1].split(".")[-1]
         expected_extension = "jpg"
         self.assertEqual(expected_extension,actual_extension)
         
@@ -54,14 +54,14 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         weights_path = "../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt"
         save_dir = "../data/delete/results/"
         save_dir_binary = "../data/delete/binary_results/"
-        for i in glob.glob(save_dir_binary + "*"):
+        for i in glob.glob(save_dir_binary + "*.jpg"):
             img = cv2.imread(i)
             len_of_unique_values = len(np.unique(img))
             if len_of_unique_values > 30: # normal image have more than 100 values. Binary image made by lanenet has less than 20 values
                 raise Exception("The images have way too many values to be a binary image")
-        for i in os.listdir(save_dir):
-            os.remove(save_dir + i)
-        for i in os.listdir(save_dir_binary):
-            os.remove(save_dir_binary + i) 
+        for i in glob.glob(save_dir + "*.jpg"):
+            os.remove(i)
+        for i in glob.glob(save_dir_binary + "*.jpg"):
+            os.remove(i) 
         
     # TODO: add more tests
