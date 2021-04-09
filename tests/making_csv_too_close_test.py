@@ -76,7 +76,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         classes = None
         CSV_destination = "../data/delete/csv/"
         csv_name = "too_close.csv"
-        actual_extension = os.listdir(CSV_destination)[0].split(".")[-1]
+        actual_extension = os.listdir(CSV_destination)[1].split(".")[-1]
         #TODO: add checking the length of the lists
         expected_extension = "csv"
         self.assertEqual(expected_extension,actual_extension)

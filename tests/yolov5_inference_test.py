@@ -31,7 +31,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         imgsz = 1280 
         conf_thres = 0.25
         iou_thres = 0.45
-        device = "0"
+        device = "cpu"
         output_folder = "../data/delete/too_close/labels/"
         save_txt = "text.txt"
         save_conf = False
@@ -60,7 +60,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
         output_folder = "../data/delete/too_close/labels/"
         labels_output_directory = "../data/delete/too_close/labels/labels/*"
         labels_directory = "../data/labels/"
-        a = glob.glob(labels_directory+ "*")
+        a = glob.glob(labels_directory+ "/labels/*")
         b = glob.glob(output_folder + "labels/*")
         for i in a:
             for j in b:
@@ -74,10 +74,10 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
                         break 
                 f1.close() 
                 f2.close()
-        for i in os.listdir(output_folder):
-            for j in os.listdir(output_folder + "images/"):
-                os.remove(output_folder + "images/" + j)
-            for k in os.listdir(output_folder + "labels/"):
-                os.remove(output_folder + "labels/" + k)
+        for i in glob.glob(output_folder + "images/*.jpg"):
+            os.remove(i)
+        for j in glob.glob(output_folder + "labels/*.txt"):
+            os.remove(j)
+
             
     # TODO: add more tests
