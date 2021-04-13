@@ -1,5 +1,4 @@
 experimental_tailgating/
-source_tailgating/
 evaluate_tailgating/*.csv
 extras_tailgating/*
 */__pycache__
