@@ -26,7 +26,7 @@ LOG = init_logger.get_logger(log_file_name_prefix='lanenet_eval_vid')
 
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--image_dir', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/clips2/clips",help='The source tusimple lane test data dir')
+    parser.add_argument('--image_dir', type=str, default = "../data/clips",help='The source tusimple lane test data dir')
     parser.add_argument('--weights_path', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/weights/BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt",help='The model weights path')
     parser.add_argument('--save_dir', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/results2", help='The test output save root dir')
     parser.add_argument('--save_dir_binary', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2", help='The test output save root dir')
@@ -53,8 +53,8 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     Images with lanes marked on them in the save_dir folder and binary results in the save_dir_binary folder
     """
     # Errors and exceptions
-    if not os.path.exists(src_dir):
-        raise ValueError("The required input images are not present. Please recheck the input image source")
+    # if not os.path.exists(src_dir):
+    #     raise ValueError("The required input images are not present. Please recheck the input image source")
     
     # TODO: check the length of lists here
     check_img = glob.glob(src_dir + "/*")
@@ -123,9 +123,8 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
                 LOG.info('Mean inference time every single image: {:.5f}s'.format(np.mean(avg_time_cost)))
                 avg_time_cost.clear()
 
-            input_image_dir = ops.split(image_path.split('clips')[1])[0][1:]
             input_image_name = ops.split(image_path)[1]
-            output_image_dir = ops.join(save_dir, input_image_dir)
+            output_image_dir = save_dir
             os.makedirs(output_image_dir, exist_ok=True)
             output_image_path = ops.join(output_image_dir, input_image_name)
             output_bin_image_dir = ops.join(save_dir_binary, input_image_name)
