@@ -69,8 +69,7 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
                 for line1,line2 in zip(f1,f2): 
                     if line1 == line2: 
                         continue
-                    else: 
-                        # print(line1 + line2) 
+                    else:
                         break 
                 f1.close() 
                 f2.close()
@@ -78,6 +77,5 @@ class TestEvaluatingVidOnLanenet(unittest.TestCase):
             os.remove(i)
         for j in glob.glob(output_folder + "labels/*.txt"):
             os.remove(j)
-
             
     # TODO: add more tests
