@@ -1,19 +1,35 @@
 """
-sample CLI: 
+sample CLI:
 1. cd utils
-2. python3 converting_video_to_frames.py --source_vid /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/vids/clip2.avi --output_images /media/sagar/"New Volume"/everything/job/Seneca/data/making_vid/frame_extraction/
+2. python3 converting_video_to_frames.py --source_vid {path/to/video} \
+    --output_images {path/to/output/directory}
 Code Description
 Making frames from video
 """
-import cv2
-import time
-import os
+
 import argparse
+import os
+import time
+
+import cv2 # pylint: disable=import-error
 
 def init_args():
+    """
+    Initialize command line arguments.
+    """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source_vid', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/vids/clip2.avi",help='The path to the input vid')
-    parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frame_extraction/",help='path to output frames of the vid')
+    parser.add_argument(
+        '--source_vid',
+        type=str,
+        default = "../videos/video_to_frames_in.avi",
+        help='The path to the input vid'
+    )
+    parser.add_argument(
+        '--output_images',
+        type=str,
+        default= "../data/output_images",
+        help='path to output frames of the vid'
+    )
     return parser.parse_args()
 
 def video_to_frames(input_loc, output_loc):
@@ -30,7 +46,7 @@ def video_to_frames(input_loc, output_loc):
         os.mkdir(output_loc)
     except OSError:
         pass
-    
+
     time_start = time.time()
     cap = cv2.VideoCapture(input_loc)
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
@@ -38,10 +54,10 @@ def video_to_frames(input_loc, output_loc):
     count = 0
     print ("Converting video..\n")
     while cap.isOpened():
-        ret, frame = cap.read()
+        _, frame = cap.read()
         cv2.imwrite(output_loc + "/%#05d.jpg" % (count+1), frame)
         count = count + 1
-        if (count > (frame_count-1)):
+        if count > (frame_count-1):
             time_end = time.time()
             cap.release()
             print ("Done extracting frames.\n%d frames extracted" % count)
