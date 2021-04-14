@@ -19,7 +19,6 @@ def init_args():
 
 def frame_to_vids(source,output_vid_name):
     """
-    
     Parameters
     ----------
     source : str
@@ -29,13 +28,15 @@ def frame_to_vids(source,output_vid_name):
 
     Returns
     -------
-    Makes the video of the input frames.
-    Function does not return any output
+    Generates a video file using the DIVX codec from source images.
+    Function does not return any output, the generated video file is uploaded to output_vid path arg.
 
     """
     img_array = []
     for filename in sorted(glob.glob(source)):
         img = cv2.imread(filename)
+        if img is None:
+            raise ValueError("Input images are either missing or blank. Please check the source folder.")
         height, width, layers = img.shape
         size = (width,height)
         img_array.append(img)

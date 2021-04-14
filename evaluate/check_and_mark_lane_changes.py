@@ -62,12 +62,12 @@ def check_and_mark_lane_changes(source_binary, CSV_destination):
         unique_array = np.unique(cropped_area)
         lane_values = [250,251,252,253,254,255] # values of the lane given by laneNet
         existing = np.isin(lane_values, unique_array)
-        name = i.split("/")[-1]
-        for j in existing:
-            if j == True:
+        frame_name = i.split("/")[-1]
+        for lane_changed in existing:
+            if lane_changed == True:
                 lane_change_found = 1
                 break
-        names.append(name)
+        names.append(frame_name)
         lane_change.append(lane_change_found)
     dict = {'name_of_img': names, 'lane change (0/1)': lane_change}   
     dataframe = pd.DataFrame(dict)  

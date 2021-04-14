@@ -26,9 +26,7 @@ class TestMarkingLaneChanges(unittest.TestCase):
         binary_imgs_directory = "../data/binary_results/"
         csv_destination = "../data/delete/csv/"
         csv_name = "Image_names_and_lane_change_status.csv"
-        if os.path.exists(binary_imgs_directory):
-            pass
-        else:
+        if not os.path.exists(binary_imgs_directory):
             os.mkdir(binary_imgs_directory)
         actual = check_and_mark_lane_changes(binary_imgs_directory + "*", csv_destination + csv_name)
         self.assertIsNone(actual)

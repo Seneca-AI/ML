@@ -12,7 +12,7 @@ import numpy as np
 import argparse
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source_dataset', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/*",help='The path to the input dataset')
+    parser.add_argument('--source_dataset', type=str, default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/frames2/*/",help='The path to the input dataset')
     parser.add_argument('--output_images', type=str, default= "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/delete_if_seen/",help='path to where you wish to save the frames')
     return parser.parse_args()
 
@@ -42,8 +42,9 @@ def renaming_padding_if_in_folder_names(Source,Dest):
 
     Returns
     -------
-    images: save images with renamed and in the indicated directories, all the images have 0s appended in the front for easier sorting
-    hi : list
+    images: save images with renamed and in the indicated directories, 
+    all the images have 0s appended in the front for easier sorting
+    renamed_img_list : list
         It is a list of all the images that we just sorted and renamed
 
     """
@@ -51,8 +52,8 @@ def renaming_padding_if_in_folder_names(Source,Dest):
     lengths = []
     for i in glob.glob(Source):
         img = cv2.imread(i)
-        #print(i)
-        
+        if img is None:
+            raise ValueError("Input images are either missing or None. Please check the source folder.")
         name = str(int(i.split("/")[-2])+int((i.split("/")[-1]).split(".")[0]))
         length = len(name)
         lengths.append(length)
@@ -66,8 +67,12 @@ def renaming_padding_if_in_folder_names(Source,Dest):
         new_name = name.zfill(zeros_length + len(name))
         names.append(new_name)
         cv2.imwrite(Dest + new_name + ".jpg", img)
-    hi = sorted(names)
-    return hi
+        read_img = cv2.imread(Dest + new_name + ".jpg")
+        if read_img is None:
+            raise ValueError("""Output folder or the images being made are corrupt or NoneType.
+                             Please check the function and output folder""")
+    renamed_img_list = sorted(names)
+    return renamed_img_list
 
 if __name__ == '__main__':
     args = init_args()

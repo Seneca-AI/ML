@@ -32,6 +32,14 @@ def init_args():
     parser.add_argument('--save_dir_binary', type=str,default = "/media/sagar/New Volume/everything/job/Seneca/data/making_vid/binary_results2", help='The test output save root dir')
     return parser.parse_args()
 
+def set_session_configuration():
+    sess_config = tf.ConfigProto()
+    sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.GPU.GPU_MEMORY_FRACTION
+    sess_config.gpu_options.allow_growth = CFG.GPU.TF_ALLOW_GROWTH
+    sess_config.gpu_options.allocator_type = 'BFC'
+    sess = tf.Session(config=sess_config)
+    return sess
+
 def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     """
     This functions takes the images from the image_dir and makes a binary mask of the lanes
@@ -53,11 +61,12 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     Images with lanes marked on them in the save_dir folder and binary results in the save_dir_binary folder
     """
     # Errors and exceptions
-    # if not os.path.exists(src_dir):
-    #     raise ValueError("The required input images are not present. Please recheck the input image source")
+    if not os.path.exists(src_dir):
+        raise ValueError("The required input images are not present. Please recheck the input image source")
     
     # TODO: check the length of lists here
     check_img = glob.glob(src_dir + "/*")
+    
     for i in check_img:
         img_extension = str(i.split("/")[-1].split(".")[1])
         if img_extension != "jpg" and "png":
@@ -85,12 +94,7 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     saver = tf.train.Saver()
 
     # Set sess configuration
-    sess_config = tf.ConfigProto()
-    sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.GPU.GPU_MEMORY_FRACTION
-    sess_config.gpu_options.allow_growth = CFG.GPU.TF_ALLOW_GROWTH
-    sess_config.gpu_options.allocator_type = 'BFC'
-
-    sess = tf.Session(config=sess_config)
+    sess = set_session_configuration()
 
     with sess.as_default():
 
