@@ -24,7 +24,7 @@ class TestVidsToFrames(unittest.TestCase):
         input_vid = "clip1.avi"
         input_vid_location = "../data/vid/"
         output_images_from_vid = "../data/delete/extracted_frames"
-        actual = video_to_frames(input_loc = input_vid_location + input_vid, output_loc = output_images_from_vid + "/")
+        video_to_frames(input_loc = input_vid_location + input_vid, output_loc = output_images_from_vid + "/")
         self.assertIsNone(actual)
         
     def test_output_values(self):
