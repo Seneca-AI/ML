@@ -77,20 +77,15 @@ def evaluate_vid_on_lanenet(src_dir, weights_path, save_dir,save_dir_binary):
     
     # programme begins
     assert ops.exists(src_dir), '{:s} not exist'.format(src_dir)
-
     os.makedirs(save_dir, exist_ok=True)
     
     assert ops.exists(save_dir_binary), '{:s} not exist'.format(save_dir_binary)
-
     os.makedirs(save_dir_binary, exist_ok=True)
     
     input_tensor = tf.placeholder(dtype=tf.float32, shape=[1, 256, 512, 3], name='input_tensor')
-
     net = lanenet.LaneNet(phase='test', cfg=CFG)
     binary_seg_ret, instance_seg_ret = net.inference(input_tensor=input_tensor, name='LaneNet')
-
     postprocessor = lanenet_postprocess.LaneNetPostProcessor(cfg=CFG)
-
     saver = tf.train.Saver()
 
     # Set sess configuration
