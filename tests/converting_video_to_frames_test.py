@@ -32,8 +32,8 @@ class TestVidsToFrames(unittest.TestCase):
         input_vid_location = "../data/vid/"
         output_images_from_vid = "../data/delete/extracted_frames"
         actual_outputs = os.listdir(output_images_from_vid)
-        expected = ["00001.jpg", '00002.jpg', '00003.jpg']
-        self.assertEqual(expected,actual_outputs)
+        expected = ["00001.jpg", '00002.jpg', '00003.jpg', '.gitignore']
+        self.assertCountEqual(expected,actual_outputs)
         for i in os.listdir(output_images_from_vid):
             os.remove(output_images_from_vid +"/"+i)
     
