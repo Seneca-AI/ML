@@ -1,3 +1,4 @@
+Name: pylint
 on:
   push:
     branches:
@@ -6,22 +7,22 @@ on:
     branches:
       - main
 
-name: lint python
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
 
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v1
       with:
         python-version: 3.8
-
     - name: Install pylint
       run: |
+        python -m pip install --upgrade pip
         pip install pylint
-
-    - name: Run pylint
+    - name: Analyze relevant code with pylint
       run: |
         pylint evaluate
         pylint tests
