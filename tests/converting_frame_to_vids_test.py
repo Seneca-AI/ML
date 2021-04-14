@@ -5,7 +5,7 @@ CLI
 The output should be
 .
 ----------------------------------------------------------------------
-Ran 1 test in 261.948s
+Ran 2 tests in 261.948s
 
 OK
 this is the unit test module for the converting_frame_to_vids.py
@@ -32,8 +32,7 @@ class TestFrameToVids(unittest.TestCase):
         output_vid = "clip1.avi"
         output_vid_location = "../data/delete/vid/"
         actual_output = sorted(os.listdir(output_vid_location))[1]
-        expected = "clip1.avi"
-        self.assertEqual(expected, actual_output)
+        self.assertEqual("clip1.avi", actual_output)
         os.remove(output_vid_location + output_vid)
     
     # TODO: add more tests

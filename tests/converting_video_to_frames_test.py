@@ -36,5 +36,4 @@ class TestVidsToFrames(unittest.TestCase):
         self.assertEqual(expected,actual_outputs)
         for i in glob.glob(output_images_from_vid + "/*.jpg"):
             os.remove(i)
-    
     # TODO: add more tests

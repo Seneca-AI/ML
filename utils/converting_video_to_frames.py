@@ -32,8 +32,11 @@ def video_to_frames(input_loc, output_loc):
     
     #Function starts
     if not os.path.exists(output_loc):
-        os.mkdir(output_loc)
-        
+        try:
+            os.mkdir(output_loc)
+        except OSError as error : 
+            print(error) 
+    
     time_start = time.time()
     video_capture = cv2.VideoCapture(input_loc)
     frame_count = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
