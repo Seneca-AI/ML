@@ -3,4 +3,5 @@ extras_tailgating/*
 */__pycache__
 */log/
 BiseNetV2_LaneNet_Tusimple_Model_Weights/
-*/*/__pycache__
+../*/*/__pycache__
+__pycache__
