@@ -4,3 +4,4 @@ BiseNetV2_LaneNet_Tusimple_Model_Weights/
 source/
 evaluate/*
 extras/*
+venv
