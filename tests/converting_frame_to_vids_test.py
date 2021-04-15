@@ -1,11 +1,11 @@
 """
 CLI
 1. cd testing
-2. python -m unittest converting_frame_to_vids_test.py
+2. python3 -m unittest converting_frame_to_vids_test.py
 The output should be
 .
 ----------------------------------------------------------------------
-Ran 1 test in 261.948s
+Ran 2 tests in 261.948s
 
 OK
 this is the unit test module for the converting_frame_to_vids.py
@@ -31,9 +31,8 @@ class TestFrameToVids(unittest.TestCase):
         input_images = "../data/clips/"
         output_vid = "clip1.avi"
         output_vid_location = "../data/delete/vid/"
-        actual_output = os.listdir(output_vid_location)[0]
-        expected = "clip1.avi"
-        self.assertIn(expected, actual_output)
+        actual_output = sorted(os.listdir(output_vid_location))[1]
+        self.assertEqual("clip1.avi", actual_output)
         os.remove(output_vid_location + output_vid)
     
     # TODO: add more tests
