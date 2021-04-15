@@ -12,12 +12,12 @@ import argparse
 
 def init_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source_images', type=str, default = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/images/*.jpg',help='The path to the input images ')
-    parser.add_argument('--source_labels', type=str, default = '/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/labels/',help='Path to the labels of the BBOX during the yolov5 evaluation')
+    parser.add_argument('--source_images', type=str, default = '/media/sagar/New Volume/everything/job/Seneca/github_clean/tailgating_dev/ML/data/delete/too_close/labels/images/*.jpg',help='The path to the input images ')
+    parser.add_argument('--source_labels', type=str, default = '/media/sagar/New Volume/everything/job/Seneca/github_clean/tailgating_dev/ML/data/delete/too_close/labels/',help='Path to the labels of the BBOX during the yolov5 evaluation')
     parser.add_argument('--CSV_destination', type=str, default= 'Image_names_and_too_close_status.csv',help='path to where you wish to save the csv file')
     return parser.parse_args()
 
-def making_csv_of_too_close(source_images, source_labels, CSV_destination):
+def making_csv_of_too_close(source_images, source_labels, csv_destination):
     """
     Parameters
     ----------
@@ -81,8 +81,8 @@ def making_csv_of_too_close(source_images, source_labels, CSV_destination):
         
     dict = {'name_of_img': names, 'too close (0/1)': too_close}   
     dataframe = pd.DataFrame(dict) 
-    dataframe.to_csv(CSV_destination)
+    dataframe.to_csv(csv_destination)
 
 if __name__ == '__main__':
     args = init_args()
-    making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, CSV_destination= args.CSV_destination)
+    making_csv_of_too_close(source_images = args.source_images, source_labels = args.source_labels, csv_destination= args.CSV_destination)

@@ -1,6 +1,6 @@
 """
 CLI
-python3 yolov5_inference.py --weights ../source_tailgating/yolov5s.pt --source ../data/too_close/images --img-size 1280 --conf-thres 0.25 --iou-thres 0.45 --device "-1" --output_folder ../data/too_close/labels/ 
+python3 yolov5_inference.py --source ../data/too_close/images --img_size 1280 --conf_thres 0.25 --iou_thres 0.45 --device "0" --output_folder ../data/too_close/labels/ 
 Code for getting the inference of the yolov5
 """
 
@@ -15,13 +15,27 @@ import os
 import sys
 import warnings
 sys.path.append("../source_tailgating")
-
+sys.path.append("../")
 from models.experimental import attempt_load
 from utils.datasets import LoadImages
 from utils.general import check_img_size, non_max_suppression, apply_classifier, \
     scale_coords, xyxy2xywh, strip_optimizer, set_logging
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
+
+def init_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--weights', nargs='+', type=str, default='../source_tailgating/yolov5s.pt', help='model.pt path(s)')
+    parser.add_argument('--source', type=str, default='../data/too_close/images', help='source')  
+    parser.add_argument('--img_size', type=int, default=1280, help='inference size (pixels)')
+    parser.add_argument('--conf_thres', type=float, default=0.25, help='object confidence threshold')
+    parser.add_argument('--iou_thres', type=float, default=0.45, help='IOU threshold for NMS')
+    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--save_txt', action='store_true', default = "text.txt",help='save results to *.txt')
+    parser.add_argument('--save_conf', action='store_true', help='save confidences in --save-txt labels')
+    parser.add_argument('--classes', nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
+    parser.add_argument('--output_folder', default='../data/too_close/labels/', help='where you wish to save the labels')
+    return parser.parse_args()
 
 def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, save_conf, classes, output_folder):
     """
@@ -196,19 +210,6 @@ def detect(weights, source, img_size, conf_thres, iou_thres, device, save_txt, s
         s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ''
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='../source_tailgating/yolov5s.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/images', help='source')  
-    parser.add_argument('--img_size', type=int, default=1280, help='inference size (pixels)')
-    parser.add_argument('--conf_thres', type=float, default=0.25, help='object confidence threshold')
-    parser.add_argument('--iou_thres', type=float, default=0.45, help='IOU threshold for NMS')
-    parser.add_argument('--device', default='0', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
-    parser.add_argument('--save_txt', action='store_true', default = "text.txt",help='save results to *.txt')
-    parser.add_argument('--save_conf', action='store_true', help='save confidences in --save-txt labels')
-    parser.add_argument('--classes', nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
-    parser.add_argument('--output_folder', default='/media/sagar/New Volume/everything/job/Seneca/data/making_vid/tailgatin_data/too_close/labels/', help='where you wish to save the labels')
-    opt = parser.parse_args()
-    print(opt)
-
+    opt = init_args()
     with torch.no_grad():
         detect(opt.weights, opt.source, opt.img_size, opt.conf_thres, opt.iou_thres, opt.device, opt.save_txt, opt.save_conf, opt.classes, opt.output_folder)
