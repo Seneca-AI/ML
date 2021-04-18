@@ -24,6 +24,4 @@ jobs:
         pip install pylint
     - name: Analyze relevant code with pylint
       run: |
-        pylint evaluate
-        pylint tests
-        pylint utils
+        pylint ml --disable=fixme
