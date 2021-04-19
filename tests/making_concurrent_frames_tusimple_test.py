@@ -29,8 +29,8 @@ class TestMakingConcurrentFrames(unittest.TestCase):
         source_dataset = "../data/frames/*/*"
         output_images = "../data/delete/clips/"
         b = os.listdir(output_images)
-        a = ['21.jpg', '22.jpg', '51.jpg', '52.jpg']
-        self.assertEqual(a,b)
+        a = ['21.jpg', '22.jpg', '51.jpg', '52.jpg', '.gitignore']
+        self.assertCountEqual(a,b)
         for i in os.listdir(output_images):
             os.remove(output_images + i)
     
