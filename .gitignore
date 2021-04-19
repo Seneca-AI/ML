@@ -4,4 +4,4 @@ extras/
 log
 source/*
 venv
-main.py
+dev.py
