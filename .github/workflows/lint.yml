@@ -43,5 +43,8 @@ jobs:
         name: proto-definitions-python
         path: api/type/
     - name: Analyze relevant code with pylint
+      # These ignored errors will be caught by tests and compilation, there's no sense in paying attention to them here.
       run: |
-        pylint ml --disable=fixme
+        pylint ml --disable=fixme,no-member,import-error
+        pylint main.py --disable=fixme,no-member,import-error
+      
