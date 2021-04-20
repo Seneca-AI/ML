@@ -11,4 +11,16 @@ The ML repo maintains all of the code for running machine learning models in Sen
     * `echo '\n*_pb2.py' >> ML/api/type/.gitignore`
 * Seneca utilizes [Cloud Functions](https://cloud.google.com/functions) to run the ML microservices.  In Python, you use the flask framework to define each microservice as an endpoint, and define each in main.py as its own function that takes a request parameter, e.g.: `def microservice_one(flask.request):```
     *  No logic is placed in main.py, and it simply calls server.py
-    *  The function name must match the cloud function's name (which is also the end of the endpoint's path)
+    *  The function name must match the cloud function's name (which is also the last piece of the endpoint's path)
+
+
+## Repository Rules
+* 1 commit per pull request
+
+### Style Rules
+* Functions must not be more than 100 lines of code, with few exceptions granted.
+* Functions must be defined like
+` def func_name(param_one: type, param_two: type) -> return_type: `
+
+### Testing Rules
+* Tests should test the output of a function.  If the function has no output but performs some operation, then the output of the function should _not_ be tested, but rather whatever operation was done should be tested (e.g. checking output paths, _and the values stored in the files_).
