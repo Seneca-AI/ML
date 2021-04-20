@@ -1,3 +1,3 @@
-sudo docker stop lane_tailgate
-sudo docker start lane_tailgate
-sudo docker attach lane_tailgate
+docker stop lane_tailgate
+docker start lane_tailgate
+docker attach lane_tailgate
