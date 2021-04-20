@@ -1,6 +1,6 @@
 """
 sample CLI
-python3 evalualte_vid_on_lanenet.py --image_dir ./clips --weights_path ./tusimple_lanenet.ckpt --save_dir ./results2 --save_dir_binary ./binary_results2
+python3 evaluate_vid_on_lanenet.py --image_dir ./clips --weights_path ../BiseNetV2_LaneNet_Tusimple_Model_Weights/tusimple_lanenet.ckpt --save_dir ./results2 --save_dir_binary ./binary_results2
 Evaluate lanenet model on any vid
 """
 import argparse
