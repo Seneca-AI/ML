@@ -1,9 +1,10 @@
 build/
-ml.egg-info/
+dist/
 extras/
+ml.egg-info/
 **/__pycache__
 */log
-log
+log/
 source/*
 venv
 dev.py
