@@ -1,3 +1,5 @@
+build/
+ml.egg-info/
 extras/
 **/__pycache__
 */log

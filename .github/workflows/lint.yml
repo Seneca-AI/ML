@@ -47,4 +47,5 @@ jobs:
       run: |
         pylint ml --disable=fixme,no-member,import-error
         pylint main.py --disable=fixme,no-member,import-error
+        pylint tests/utils --disable=fixme,no-member,import-error,missing-class-docstring,missing-function-docstring
       
