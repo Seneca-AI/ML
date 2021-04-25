@@ -6,7 +6,7 @@ a raw video toits following distancedata.
 from api.type import processed_pb2
 
 def mark_following_distance(path_to_video: str) -> processed_pb2.FollowingDistanceForVideo:
-    #pylint: disable=unused-argument
+    # pylint: disable=unused-argument
     """
     Implements main logic for marking following distance.
     Params:

@@ -8,7 +8,7 @@ The ML repo maintains all of the code for running machine learning models in Sen
     * (from the parent directory of this repo)
     * `git clone https://github.com/Seneca-AI/common.git`
     * `cp -r common/proto_out/python/api ML`
-    * `echo '\n*_pb2.py' >> ML/api/type/.gitignore`
+    * `echo '*_pb2.py' >> ML/api/type/.gitignore`
 * Seneca utilizes [Cloud Functions](https://cloud.google.com/functions) to run the ML microservices.  In Python, you use the flask framework to define each microservice as an endpoint, and define each in main.py as its own function that takes a request parameter, e.g.: `def microservice_one(flask.request):```
     *  No logic is placed in main.py, and it simply calls server.py
     *  The function name must match the cloud function's name (which is also the last piece of the endpoint's path)
@@ -24,3 +24,4 @@ The ML repo maintains all of the code for running machine learning models in Sen
 
 ### Testing Rules
 * Tests should test the output of a function.  If the function has no output but performs some operation, then the output of the function should _not_ be tested, but rather whatever operation was done should be tested (e.g. checking output paths, _and the values stored in the files_).
+* The location of test files matches the location of the implementation it is testing.  For example, if the implementation is at ml/utils/fileutils/ then the tests will be located at tests/utils/fileutils/.
