@@ -46,7 +46,7 @@ jobs:
       # These ignored errors will be caught by tests and compilation, there's no sense in paying attention to them here.
       run: |
         pylint ml main.py --disable=fixme,no-member,import-error
-        pylint tests/utils --disable=fixme,no-member,import-error,missing-class-docstring,missing-function-docstring
+        pylint tests/cloud tests/server tests/utils --disable=fixme,no-member,import-error,missing-class-docstring,missing-function-docstring
       
   test:
     runs-on: ubuntu-latest
@@ -69,4 +69,4 @@ jobs:
         path: api/type/
     - name: Run tests
       run: |
-        pytest tests/utils tests/cloud
+        pytest tests/cloud tests/server tests/utils -p no:warnings

@@ -1,9 +1,11 @@
 """Cloud function definitions.  All functions simply forward to server.py"""
 from flask import Flask, request
 
-from . import server
+from . import server as app_server
 
 app = Flask(__name__)
+
+server = app_server.Server(False)
 
 @app.route('/lane_changing', methods=['POST'])
 def handle_lane_changing_request():
