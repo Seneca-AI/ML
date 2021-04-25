@@ -37,10 +37,13 @@ class CloudStorageClient:
         Returns:
             string: the path to the temp file on disk
         """
-        temp_file = tempfile.NamedTemporaryFile(
-            dir=VIDEO_TMP_FILE_LOCATION, suffix=".mp4", delete=False)
-        blob = storage.Blob.from_string(url, client=self.storage_client)
-        blob.download_to_filename(temp_file.name)
-        temp_file.close()
+        try:
+            # pylint: disable=consider-using-with
+            temp_file = tempfile.NamedTemporaryFile(
+                dir=VIDEO_TMP_FILE_LOCATION, suffix=".mp4", delete=False)
+            blob = storage.Blob.from_string(url, client=self.storage_client)
+            blob.download_to_filename(temp_file.name)
+        finally:
+            temp_file.close()
         return temp_file.name
     
