@@ -15,8 +15,13 @@ def mark_following_distance(path_to_video: str) -> processed_pb2.FollowingDistan
         processed_pb2.FollowingDistanceForVideo: filled out following distance for the video
     """
     # TODO(absagargupta): implement this
-    # Below is proof that the FollowingDistanceForVideo is importable.
     following_distance_for_video = processed_pb2.FollowingDistanceForVideo()
     following_distance_for_video.num_frames = 10
-    print('FollowingDistanceForVideo: ' + str(following_distance_for_video))
+
+    for i in range(following_distance_for_video.num_frames):
+        fdff = processed_pb2.FollowingDistanceForVideo.FollowingDistanceForFrame()
+        fdff.frame_index = i
+        fdff.is_too_close = (i % 2) == 0
+        following_distance_for_video.following_distance_for_frame.append(fdff)
+
     return following_distance_for_video
