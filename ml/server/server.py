@@ -1,11 +1,14 @@
 """Cloud function definitions."""
+import http
+
 from flask import Response
 
 from api.type import processed_pb2
 
 # TODO(lucaloncar): test these functions
+# TODO(lucaloncar): make this a class that initializes the GoogleCloudStorageClient
 
-def handle_lane_changing_request(request):
+def handle_lane_changing_request(request: http.request) -> http.Response:
     """
     handle_lane_changing_request is the entry point for
     lane_changing processing requests into the application.
@@ -13,7 +16,7 @@ def handle_lane_changing_request(request):
         request http.request: an http request where request.data
                 must deserialize to a LaneChangesForVideoRequest
     Returns:
-        string: str(api.type.LaneChangesForVideoResponse)
+        http.Response: http.Response(response=str(api.type.LaneChangesForVideoResponse)...)
     """
     lane_changing_request_data = request.data
     lane_changing_request = processed_pb2.LaneChangesForVideoRequest()
@@ -34,7 +37,7 @@ def handle_lane_changing_request(request):
     lane_changing_response.lane_changes_for_video.num_frames = 5
     return Response(status=200, response=str(lane_changing_response))
 
-def handle_following_distance_request(request):
+def handle_following_distance_request(request: http.request) -> http.Response:
     """
     handle_following_distance_request is the entry point for
     following_distance processing requests into the application.
@@ -42,7 +45,7 @@ def handle_following_distance_request(request):
         request http.request: an http request where request.data
         must deserialize to a FollowingDistanceForVideoRequest
     Returns:
-        string: str(api.type.FollowingDistanceForVideoResponse)
+        http.Response: http.Response(response=str(api.type.FollowingDistanceForVideoResponse)...)
     """
     following_distance_request_data = request.data
     following_distance_request = processed_pb2.FollowingDistanceForVideoRequest()
@@ -61,5 +64,5 @@ def handle_following_distance_request(request):
     following_distance_response = processed_pb2.FollowingDistanceForVideoResponse()
     following_distance_response.request_id = following_distance_request.request_id
     # TODO(lucaloncar): fix this
-    following_distance_response.lane_changes_for_video.num_frames = 10
+    following_distance_response.following_distance_for_video.num_frames = 10
     return str(following_distance_response)

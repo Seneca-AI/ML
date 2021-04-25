@@ -45,8 +45,7 @@ jobs:
     - name: Analyze relevant code with pylint
       # These ignored errors will be caught by tests and compilation, there's no sense in paying attention to them here.
       run: |
-        pylint ml --disable=fixme,no-member,import-error
-        pylint main.py --disable=fixme,no-member,import-error
+        pylint ml main.py --disable=fixme,no-member,import-error
         pylint tests/utils --disable=fixme,no-member,import-error,missing-class-docstring,missing-function-docstring
       
   test:
@@ -70,4 +69,4 @@ jobs:
         path: api/type/
     - name: Run tests
       run: |
-        pytest tests/utils
+        pytest tests/utils tests/cloud

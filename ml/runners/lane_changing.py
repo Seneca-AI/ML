@@ -6,7 +6,7 @@ a raw video to its lane changing data.
 from api.type import processed_pb2
 
 def mark_lane_changes(path_to_video: str) -> processed_pb2.LaneChangesForVideo:
-    #pylint: disable=unused-argument
+    # pylint: disable=unused-argument
     """
     Implements main logic for marking lane changes.
     Params:
