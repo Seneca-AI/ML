@@ -46,6 +46,7 @@ def frames_to_vid(path_to_input_frames_dir: str, path_to_output_video: str):
     out.release()
 
 
+# TODO(lucaloncar): take frame rate as a parameter here
 def vid_to_frames(path_to_input_vid: str, path_to_output_frames_dir: str):
     """
     vid_to_frames splits the given video into individual frames

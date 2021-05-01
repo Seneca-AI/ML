@@ -12,8 +12,8 @@ import collections
 
 import tensorflow as tf
 
-from quarantined.lane_changing.semantic_segmentation_zoo import cnn_basenet
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.semantic_segmentation_zoo import cnn_basenet
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
 
 
 class _StemBlock(cnn_basenet.CNNBaseModel):

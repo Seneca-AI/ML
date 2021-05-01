@@ -20,7 +20,7 @@ import loguru
 import tqdm
 
 from data_provider import lanenet_data_feed_pipline
-from quarantined.lane_changing.lanenet_model import lanenet
+from quarantined.lane_detection.lanenet_model import lanenet
 
 LOG = loguru.logger
 

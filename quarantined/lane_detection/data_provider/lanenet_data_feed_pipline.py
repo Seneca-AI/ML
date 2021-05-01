@@ -18,7 +18,7 @@ import numpy as np
 import tensorflow as tf
 import loguru
 
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
 from data_provider import tf_io_pipline_tools
 
 CFG = parse_config_utils.lanenet_cfg

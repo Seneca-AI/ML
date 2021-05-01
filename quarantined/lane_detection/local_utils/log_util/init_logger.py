@@ -13,7 +13,7 @@ import time
 
 import loguru
 
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
 
 CFG = parse_config_utils.lanenet_cfg
 

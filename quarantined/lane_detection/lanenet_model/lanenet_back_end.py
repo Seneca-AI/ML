@@ -10,8 +10,8 @@ LaneNet backend branch which is mainly used for binary and instance segmentation
 """
 import tensorflow as tf
 
-from quarantined.lane_changing.lanenet_model import lanenet_discriminative_loss
-from quarantined.lane_changing.semantic_segmentation_zoo import cnn_basenet
+from quarantined.lane_detection.lanenet_model import lanenet_discriminative_loss
+from quarantined.lane_detection.semantic_segmentation_zoo import cnn_basenet
 
 
 class LaneNetBackEnd(cnn_basenet.CNNBaseModel):

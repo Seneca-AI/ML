@@ -8,9 +8,9 @@
 """
 LaneNet frontend branch which is mainly used for feature extraction
 """
-from quarantined.lane_changing.semantic_segmentation_zoo import cnn_basenet
-from quarantined.lane_changing.semantic_segmentation_zoo import vgg16_based_fcn
-from quarantined.lane_changing.semantic_segmentation_zoo import bisenet_v2
+from quarantined.lane_detection.semantic_segmentation_zoo import cnn_basenet
+from quarantined.lane_detection.semantic_segmentation_zoo import vgg16_based_fcn
+from quarantined.lane_detection.semantic_segmentation_zoo import bisenet_v2
 
 
 class LaneNetFrondEnd(cnn_basenet.CNNBaseModel):
