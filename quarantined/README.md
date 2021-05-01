@@ -1,0 +1,1 @@
+# This directory is 'quarantined' because none of the code here is unit tested or linted directly.  It works as a black box for code outside of the module.  This is mostly code copied and pasted for an MVP.
