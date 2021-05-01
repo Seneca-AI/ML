@@ -17,10 +17,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from quarantined.lane_changing.lanenet_model import lanenet
-from quarantined.lane_changing.lanenet_model import lanenet_postprocess
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
-from quarantined.lane_changing.local_utils.log_util import init_logger
+from quarantined.lane_detection.lanenet_model import lanenet
+from quarantined.lane_detection.lanenet_model import lanenet_postprocess
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.local_utils.log_util import init_logger
 
 CFG = parse_config_utils.lanenet_cfg
 LOG = init_logger.get_logger(log_file_name_prefix='lanenet_test')

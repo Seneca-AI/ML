@@ -6,7 +6,7 @@ import requests
 
 from api.type import processed_pb2
 from ml.cloud.google.cloud_storage import CloudStorageClient
-from ml.runners.lane_changing import mark_lane_changes
+from ml.runners.lane_changing import get_lane_changes_for_video
 from ml.runners.following_distance import mark_following_distance
 
 
@@ -55,7 +55,7 @@ class Server:
         lane_changing_response = processed_pb2.LaneChangesForVideoResponse()
         lane_changing_response.request_id = lane_changing_request.request_id
         lane_changing_response.lane_changes_for_video.CopyFrom(
-            mark_lane_changes(path_to_video_file))
+            get_lane_changes_for_video(path_to_video_file))
 
         os.remove(path_to_video_file)
 

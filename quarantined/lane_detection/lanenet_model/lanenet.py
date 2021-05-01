@@ -10,9 +10,9 @@ Implement LaneNet Model
 """
 import tensorflow as tf
 
-from quarantined.lane_changing.lanenet_model import lanenet_back_end
-from quarantined.lane_changing.lanenet_model import lanenet_front_end
-from quarantined.lane_changing.semantic_segmentation_zoo import cnn_basenet
+from quarantined.lane_detection.lanenet_model import lanenet_back_end
+from quarantined.lane_detection.lanenet_model import lanenet_front_end
+from quarantined.lane_detection.semantic_segmentation_zoo import cnn_basenet
 
 
 class LaneNet(cnn_basenet.CNNBaseModel):

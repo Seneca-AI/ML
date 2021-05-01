@@ -9,7 +9,7 @@
 Generate cityscapes tfrecords tools
 """
 from data_provider import lanenet_data_feed_pipline
-from quarantined.lane_changing.local_utils.log_util import init_logger
+from quarantined.lane_detection.local_utils.log_util import init_logger
 
 LOG = init_logger.get_logger(log_file_name_prefix='generate_tusimple_tfrecords')
 

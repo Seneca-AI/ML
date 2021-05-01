@@ -16,7 +16,7 @@ import glog as log
 import numpy as np
 import tensorflow as tf
 
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
 
 CFG = parse_config_utils.lanenet_cfg
 

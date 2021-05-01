@@ -16,8 +16,8 @@ import argparse
 
 import tensorflow as tf
 
-from quarantined.lane_changing.lanenet_model import lanenet
-from quarantined.lane_changing.local_utils.config_utils import parse_config_utils
+from quarantined.lane_detection.lanenet_model import lanenet
+from quarantined.lane_detection.local_utils.config_utils import parse_config_utils
 
 MODEL_WEIGHTS_FILE_PATH = './test.ckpt'
 OUTPUT_PB_FILE_PATH = './lanenet.pb'
