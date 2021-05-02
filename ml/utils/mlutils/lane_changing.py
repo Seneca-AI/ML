@@ -1,4 +1,5 @@
 """ lane_changing implements all basic functions related to lane_changing. """
+import os
 
 from quarantined.lane_detection.tools.evaluate_lanenet_on_tusimple import eval_lanenet
 
@@ -14,6 +15,9 @@ def generate_lane_masks(input_frames_dir: str, output_masks_dir: str):
     Returns:
         None
     """
+    if not os.path.isdir(input_frames_dir):
+        raise FileNotFoundError
+
     eval_lanenet(
         input_frames_dir,
         "quarantined/lane_detection/trained_model/tusimple_lanenet.ckpt",

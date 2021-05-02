@@ -16,25 +16,25 @@ class TestGenerateLaneMasks(unittest.TestCase):
             return
 
         invalid_path = "error/do/not/exist"
-        valid_input_path = "tests/data/raw_frames/in"
         valid_output_path = "tests/data/raw_frames/out"
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(FileNotFoundError):
             generate_lane_masks(invalid_path, valid_output_path)
 
-        with self.assertRaises(Exception):
-            generate_lane_masks(valid_input_path, invalid_path)
 
-    # pylint: disable=no-self-use
-    def test_does_not_crash(self):
-        # Do not run in CI env.
-        if os.getenv("CI"):
-            return
+def test_does_not_crash():
+    # Do not run in CI env.
+    if os.getenv("CI"):
+        return
 
-        input_path = "tests/data/raw_frames/in"
-        output_path = "tests/data/raw_frames/out/generate_lane_mask"
-        os.mkdir(output_path)
+    input_path = "tests/data/raw_frames/in"
+    output_path = "tests/data/raw_frames/out/generate_lane_mask"
+    os.mkdir(output_path)
 
+    try:
         generate_lane_masks(input_path, output_path)
-
+    except:
         shutil.rmtree(output_path)
+        raise
+
+    shutil.rmtree(output_path)
