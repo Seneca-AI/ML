@@ -20,6 +20,12 @@ The ML repo maintains all of the code for running machine learning models in Sen
     *  No logic is placed in main.py, and it simply calls server.py
     *  The function name must match the cloud function's name (which is also the last piece of the endpoint's path)
 
+## DevOps
+
+### Deploy
+* gcloud functions deploy lane_changing --runtime python37 --trigger-http
+* gcloud functions deploy following_distance --runtime python37 --trigger-http
+
 
 ## Repository Rules
 * 1 commit per pull request

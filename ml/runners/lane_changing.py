@@ -8,11 +8,8 @@ import time
 
 from api.constants import VIDEO_TMP_FILE_LOCATION
 from api.type import processed_pb2
-from ml.utils.fileutils.video_utils import vid_to_frames
-from ml.utils.mlutils.lane_changing import generate_lane_masks
 
 def get_lane_changes_for_video(path_to_video: str) -> processed_pb2.LaneChangesForVideo:
-    # pylint: disable=unused-argument
     """
     get_lane_changes_for_video implements main logic for marking lane changes.
     Params:
@@ -20,23 +17,21 @@ def get_lane_changes_for_video(path_to_video: str) -> processed_pb2.LaneChangesF
     Returns:
         processed_pb2.LaneChangesForVideo: filled out lane changes for the video
     """
+    if not os.path.exists(path_to_video):
+        raise FileNotFoundError(path_to_video)
+
+    # Create directories to stage files.
     frames_dir_name = "frames"
     masks_dir_name = "masks"
-    current_millis_str = str(time.time() * 1000)
+    current_millis_str = str(round(time.time() * 1000))
     temp_dir = os.path.join(VIDEO_TMP_FILE_LOCATION, current_millis_str)
+    frames_dir = os.path.join(temp_dir, frames_dir_name)
+    masks_dir = os.path.join(temp_dir, masks_dir_name)
     os.mkdir(temp_dir)
+    os.mkdir(frames_dir)
+    os.mkdir(masks_dir)
 
-    # Split video into frames and store in a temp directory.
-    frames_temp_dir = os.path.join(temp_dir, frames_dir_name)
-    os.mkdir(frames_temp_dir)
-    vid_to_frames(path_to_video, frames_temp_dir)
-
-    # Create binary mask over images.
-    masks_temp_dir = os.path.join(temp_dir, masks_dir_name)
-    os.mkdir(masks_temp_dir)
-    generate_lane_masks(frames_temp_dir, masks_temp_dir)
-
-    # TODO(lucaloncar): infer lane changign using masks
+    # TODO(lucaloncar): infer lane changing using masks
 
     shutil.rmtree(temp_dir)
 
