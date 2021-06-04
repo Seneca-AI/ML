@@ -8,4 +8,5 @@ log/
 source/*
 venv
 dev.py
+demo.py
 .pytest_cache/
