@@ -69,4 +69,4 @@ jobs:
         path: api/type/
     - name: Run tests
       run: |
-        pytest tests/cloud tests/server tests/utils/fileutils -p no:warnings
+        pytest tests/cloud tests/runners tests/server tests/utils/fileutils -p no:warnings
