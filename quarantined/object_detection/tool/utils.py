@@ -163,15 +163,13 @@ def load_class_names(namesfile):
 
 
 
-def post_processing(img, conf_thresh, nms_thresh, output, lower_vertical_bound: float, upper_vertical_bound: float):
+def post_processing(img, conf_thresh, nms_thresh, output):
     """
     post_processing TODO(lucaloncar): document
     Params:
         img: ?
         conf_thresh: ?
         output: ?
-        lower_vertical_bound float: the lower bound of the x-axis of the image to generate boxes for
-        upper_vertical_bound float: the upper bound of the x-axis of the image to generate boxes for
     Returns:
         boxes: ?
     """
@@ -230,8 +228,7 @@ def post_processing(img, conf_thresh, nms_thresh, output, lower_vertical_bound: 
                 for k in range(ll_box_array.shape[0]):
                     bottom_left_corner = (ll_box_array[k, 0], ll_box_array[k, 1])
                     top_right_corner = (ll_box_array[k, 2], ll_box_array[k, 3])
-                    if bottom_left_corner[0] > lower_vertical_bound and top_right_corner[0] < upper_vertical_bound:
-                        bboxes.append([bottom_left_corner[0], bottom_left_corner[1], top_right_corner[0], top_right_corner[1], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]])
+                    bboxes.append([bottom_left_corner[0], bottom_left_corner[1], top_right_corner[0], top_right_corner[1], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]])
         
         bboxes_batch.append(bboxes)
 

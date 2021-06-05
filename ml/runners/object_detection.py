@@ -20,13 +20,7 @@ class ObjectDetector:
     ObjectDetector initializes the model.
     """
 
-    def __init__(
-        self,
-        cfg_file_path: str,
-        weight_file_path: str,
-        lower_vertical_bound: float,
-        upper_vertical_bound: float
-        ):
+    def __init__(self, cfg_file_path: str, weight_file_path: str):
         if not os.path.exists(cfg_file_path):
             raise FileNotFoundError(cfg_file_path)
         if not os.path.exists(weight_file_path):
@@ -36,8 +30,6 @@ class ObjectDetector:
         self.model.cuda()
         self.model.load_weights(weight_file_path)
 
-        self.lower_vertical_bound = lower_vertical_bound
-        self.upper_vertical_bound = upper_vertical_bound
 
         self.label_mapping = {
             # car
@@ -107,15 +99,7 @@ class ObjectDetector:
         sized = cv2.cvtColor(sized, cv2.COLOR_BGR2RGB)
 
         for _ in range(2):
-            boxes = do_detect(
-                self.model,
-                sized,
-                0.4,
-                0.6,
-                self.lower_vertical_bound,
-                self.upper_vertical_bound,
-                True
-                )
+            boxes = do_detect(self.model, sized, 0.4, 0.6, True)
 
         objects_in_frame = processed_pb2.ObjectsInFrame()
 
