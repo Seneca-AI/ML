@@ -8,7 +8,7 @@ import time
 
 import cv2
 
-from api.constants import VIDEO_TMP_FILE_LOCATION
+from api.constants import TMP_FILE_LOCATION
 from api.type import processed_pb2
 from ml.utils.fileutils.video_utils import vid_to_frames
 from quarantined.object_detection.tool.darknet2pytorch import Darknet
@@ -52,7 +52,7 @@ class ObjectDetector:
         # Create directories to stage frames.
         frames_dir_name = "frames"
         current_millis_str = str(round(time.time() * 1000))
-        temp_dir = os.path.join(VIDEO_TMP_FILE_LOCATION, current_millis_str)
+        temp_dir = os.path.join(TMP_FILE_LOCATION, current_millis_str)
         frames_dir = os.path.join(temp_dir, frames_dir_name)
         os.mkdir(temp_dir)
         os.mkdir(frames_dir)

@@ -121,53 +121,47 @@ class Server:
 
         return Response(status=200, response=self.stringify_response(following_distance_response))
 
-    def handle_objects_in_video_request(self, request: requests.request) -> Response:
+    def handle_objects_in_frame_request(self, request: requests.request) -> Response:
         """
-        handle_objects_in_video_request is the entry point for
+        handle_objects_in_frame_request is the entry point for
         objects_in_video processing requests into the application.
         Params:
             request requests.request: a requests request where request.data
-                    must deserialize to a ObjectsInVideoRequest
+                    must deserialize to a ObjectsInFrameRequest
         Returns:
             flask.Response: flask.Response(
-                response=str(api.type.ObjectsInVideoResponse )...)
+                response=str(api.type.ObjectsInFrameResponse )...)
         """
-        objects_in_video_request_data = request.data
-        objects_in_video_request = processed_pb2.ObjectsInVideoRequest()
+        objects_in_frame_request_data = request.data
+        objects_in_frame_request = processed_pb2.ObjectsInFrameRequest()
         try:
-            objects_in_video_request.ParseFromString(objects_in_video_request_data)
+            objects_in_frame_request.ParseFromString(objects_in_frame_request_data)
         except: # pylint: disable=bare-except
             return Response(status=400, response="Malformed request data.")
 
         # TODO(lucaloncar): figure out a better way to enforce type here
-        if objects_in_video_request.request_id == '':
-            return Response(status=400, response="Missing request_id field.")
-        if objects_in_video_request.simple_storage_video_url == '':
-            return Response(status=400, response="Missing simple_storage_video_url field.")
-        if not objects_in_video_request.simple_storage_video_url.startswith('gs://'):
+        if objects_in_frame_request.raw_frame is None:
+            return Response(status=400, response="Missing raw_frame.")
+        if objects_in_frame_request.raw_frame.cloud_storage_file_name == '':
+            return Response(status=400, response="Missing cloud_storage_file_name field.")
+        if not objects_in_frame_request.raw_frame.cloud_storage_file_name.startswith('gs://'):
             return Response(status=400, response="File URL must begin with 'gs://")
 
         try:
-            path_to_video_file = self.gcs_client.download_file(
-                objects_in_video_request.simple_storage_video_url)
+            path_to_image_file = self.gcs_client.download_file(
+                objects_in_frame_request.raw_frame.cloud_storage_file_name)
         except: # pylint: disable=bare-except
             # TODO(lucaloncar): return 400 if file does not exist
             return Response(
                 status=500, response="Error downloading video file from GoogleCloudStorage.")
 
-        objects_in_frames = self.object_detector.classify_video(path_to_video_file)
+        objects_in_frame = self.object_detector.classify_image(path_to_image_file)
 
-        objects_in_video_response = processed_pb2.ObjectsInVideoResponse()
-        objects_in_video_response.request_id = objects_in_video_request.request_id
-        for frame_index, frame in objects_in_frames.items():
-            objects_in_frame_numbered = processed_pb2.ObjectsInVideoResponse.ObjectsInFrameNumbered(
-            )
-            objects_in_frame_numbered.frame_index = frame_index
-            print(frame)
-            objects_in_frame_numbered.object_in_frame.CopyFrom(frame)
-            objects_in_video_response.objects_in_frame_numbered.append(objects_in_frame_numbered)
+        objects_in_video_response = processed_pb2.ObjectsInFrameResponse()
+        objects_in_video_response.raw_frame_id = objects_in_frame_request.raw_frame.id
+        objects_in_video_response.object_in_frame.CopyFrom(objects_in_frame)
 
-        os.remove(path_to_video_file)
+        os.remove(path_to_image_file)
 
         return Response(status=200, response=self.stringify_response(objects_in_video_response))
 
