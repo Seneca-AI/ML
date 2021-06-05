@@ -8,7 +8,7 @@ import tempfile
 from google.cloud import storage
 
 from api.exceptions import MissingEnvironmentVariableError
-from api.constants import VIDEO_TMP_FILE_LOCATION
+from api.constants import TMP_FILE_LOCATION
 
 # pylint: disable=too-few-public-methods
 class CloudStorageClient:
@@ -40,7 +40,7 @@ class CloudStorageClient:
         try:
             # pylint: disable=consider-using-with
             temp_file = tempfile.NamedTemporaryFile(
-                dir=VIDEO_TMP_FILE_LOCATION, suffix=".mp4", delete=False)
+                dir=TMP_FILE_LOCATION, suffix=".mp4", delete=False)
             blob = storage.Blob.from_string(url, client=self.storage_client)
             blob.download_to_filename(temp_file.name)
         finally:

@@ -6,7 +6,7 @@ import os
 import shutil
 import time
 
-from api.constants import VIDEO_TMP_FILE_LOCATION
+from api.constants import TMP_FILE_LOCATION
 from api.type import processed_pb2
 
 def get_lane_changes_for_video(path_to_video: str) -> processed_pb2.LaneChangesForVideo:
@@ -24,7 +24,7 @@ def get_lane_changes_for_video(path_to_video: str) -> processed_pb2.LaneChangesF
     frames_dir_name = "frames"
     masks_dir_name = "masks"
     current_millis_str = str(round(time.time() * 1000))
-    temp_dir = os.path.join(VIDEO_TMP_FILE_LOCATION, current_millis_str)
+    temp_dir = os.path.join(TMP_FILE_LOCATION, current_millis_str)
     frames_dir = os.path.join(temp_dir, frames_dir_name)
     masks_dir = os.path.join(temp_dir, masks_dir_name)
     os.mkdir(temp_dir)

@@ -33,14 +33,14 @@ def handle_following_distance_request():
     print("Received request at /following_distance")
     return server.handle_following_distance_request(request)
 
-@app.route('/objects_in_video', methods=['POST'])
-def handle_objects_in_video_request():
+@app.route('/objects_in_frame', methods=['POST'])
+def handle_objects_in_frame_request():
     """
-    handle_objects_in_video_request is the entry point for
+    handle_objects_in_frame_request is the entry point for
     objection_detection processing requests into the application..
     """
-    print("Received request at /objects_in_video")
-    return server.handle_objects_in_video_request(request)
+    print("Received request at /objects_in_frame")
+    return server.handle_objects_in_frame_request(request)
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
