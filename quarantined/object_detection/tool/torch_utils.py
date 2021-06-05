@@ -73,7 +73,7 @@ def convert2cpu_long(gpu_matrix):
 
 
 
-def do_detect(model, img, conf_thresh, nms_thresh, lower_vertical_bound: float, upper_vertical_bound: float, use_cuda=1):
+def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
     """
     do_detect TODO(lucaloncar): document
     Params:
@@ -81,8 +81,6 @@ def do_detect(model, img, conf_thresh, nms_thresh, lower_vertical_bound: float, 
         img: ?
         conf_thresh: ?
         nms_thresh: ?
-        lower_vertical_bound float: the lower bound of the x-axis of the image to generate boxes for
-        upper_vertical_bound float: the upper bound of the x-axis of the image to generate boxes for
         use_cuda: ?
     Returns:
         boxes: ?
@@ -113,5 +111,5 @@ def do_detect(model, img, conf_thresh, nms_thresh, lower_vertical_bound: float, 
     print('      Model Inference : %f' % (t2 - t1))
     print('-----------------------------------')
 
-    return utils.post_processing(img, conf_thresh, nms_thresh, output, lower_vertical_bound, upper_vertical_bound)
+    return utils.post_processing(img, conf_thresh, nms_thresh, output)
 

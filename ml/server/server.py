@@ -22,8 +22,6 @@ class Server:
             self.object_detector = ObjectDetector(
                 constants.PATH_TO_OBJECT_DETECTION_CONFIG,
                 constants.PATH_TO_OBJECT_DETECTION_WEIGHTS,
-                constants.OBJECT_DETECTION_X_LOWER_BOUND,
-                constants.OBJECT_DETECTION_X_UPPER_BOUND
                 )
         self.unit_test_mode = unit_test_mode
 
