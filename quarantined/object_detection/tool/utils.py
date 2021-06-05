@@ -163,8 +163,18 @@ def load_class_names(namesfile):
 
 
 
-def post_processing(img, conf_thresh, nms_thresh, output):
-
+def post_processing(img, conf_thresh, nms_thresh, output, lower_vertical_bound: float, upper_vertical_bound: float):
+    """
+    post_processing TODO(lucaloncar): document
+    Params:
+        img: ?
+        conf_thresh: ?
+        output: ?
+        lower_vertical_bound float: the lower bound of the x-axis of the image to generate boxes for
+        upper_vertical_bound float: the upper bound of the x-axis of the image to generate boxes for
+    Returns:
+        boxes: ?
+    """
     # anchors = [12, 16, 19, 36, 40, 28, 36, 75, 76, 55, 72, 146, 142, 110, 192, 243, 459, 401]
     # num_anchors = 9
     # anchor_masks = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -218,18 +228,11 @@ def post_processing(img, conf_thresh, nms_thresh, output):
                 ll_max_id = ll_max_id[keep]
 
                 for k in range(ll_box_array.shape[0]):
-                    # if ll_box_array[k, 0] > 0.4 and ll_box_array[k, 0] < 0.6:
-                        # [x_lower_left_corner, y_lower_left_corner, x_upper_right_corner, y_upper_right_corner, ?, ?, ?]
-                    bboxes.append([ll_box_array[k, 0], ll_box_array[k, 1], ll_box_array[k, 2], ll_box_array[k, 3], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]])
+                    bottom_left_corner = (ll_box_array[k, 0], ll_box_array[k, 1])
+                    top_right_corner = (ll_box_array[k, 2], ll_box_array[k, 3])
+                    if bottom_left_corner[0] > lower_vertical_bound and top_right_corner[0] < upper_vertical_bound:
+                        bboxes.append([bottom_left_corner[0], bottom_left_corner[1], top_right_corner[0], top_right_corner[1], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]])
         
         bboxes_batch.append(bboxes)
 
-    t3 = time.time()
-
-    print('-----------------------------------')
-    print('       max and argmax : %f' % (t2 - t1))
-    print('                  nms : %f' % (t3 - t2))
-    print('Post processing total : %f' % (t3 - t1))
-    print('-----------------------------------')
-    
     return bboxes_batch
