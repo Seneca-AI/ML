@@ -34,8 +34,13 @@ class Server:
         Returns:
             flask.Response
         """
+        failed_auth_response = authorize_request(request)
+        if failed_auth_response is not None:
+            return failed_auth_response
+
         return Response(status=200, response="ok")
 
+    # pylint: disable=too-many-return-statements
     def handle_lane_changing_request(self, request: requests.request) -> Response:
         """
         handle_lane_changing_request is the entry point for
@@ -46,6 +51,10 @@ class Server:
         Returns:
             flask.Response: flask.Response(response=str(api.type.LaneChangesForVideoResponse)...)
         """
+        failed_auth_response = authorize_request(request)
+        if failed_auth_response is not None:
+            return failed_auth_response
+
         lane_changing_request_data = request.data
         lane_changing_request = processed_pb2.LaneChangesForVideoRequest()
         try:
@@ -78,6 +87,7 @@ class Server:
 
         return Response(status=200, response=self.stringify_response(lane_changing_response))
 
+    # pylint: disable=too-many-return-statements
     def handle_following_distance_request(self, request: requests.request) -> Response:
         """
         handle_following_distance_request is the entry point for
@@ -89,6 +99,10 @@ class Server:
             flask.Response: flask.Response(
                 response=str(api.type.FollowingDistanceForVideoResponse)...)
         """
+        failed_auth_response = authorize_request(request)
+        if failed_auth_response is not None:
+            return failed_auth_response
+
         following_distance_request_data = request.data
         following_distance_request = processed_pb2.FollowingDistanceForVideoRequest()
         try:
@@ -121,6 +135,7 @@ class Server:
 
         return Response(status=200, response=self.stringify_response(following_distance_response))
 
+    # pylint: disable=too-many-return-statements
     def handle_objects_in_frame_request(self, request: requests.request) -> Response:
         """
         handle_objects_in_frame_request is the entry point for
@@ -132,6 +147,10 @@ class Server:
             flask.Response: flask.Response(
                 response=str(api.type.ObjectsInFrameResponse )...)
         """
+        failed_auth_response = authorize_request(request)
+        if failed_auth_response is not None:
+            return failed_auth_response
+
         objects_in_frame_request_data = request.data
         objects_in_frame_request = processed_pb2.ObjectsInFrameRequest()
         try:
@@ -153,7 +172,10 @@ class Server:
         except: # pylint: disable=bare-except
             # TODO(lucaloncar): return 400 if file does not exist
             return Response(
-                status=500, response="Error downloading video file from GoogleCloudStorage.")
+                status=404,
+                response="No file at {0}"
+                    .format(objects_in_frame_request.raw_frame.cloud_storage_file_name)
+                )
 
         objects_in_frame = self.object_detector.classify_image(path_to_image_file)
 
@@ -180,3 +202,16 @@ class Server:
         if self.unit_test_mode:
             return response.SerializeToString()
         return str(response)
+
+def authorize_request(request) -> Response:
+    """
+    authorize_request makes sure the request has the
+    right Authorization header
+    """
+    if request.headers is None:
+        return Response(status=401, response="No request headers")
+    if "Authorization" not in request.headers:
+        return Response(status=401, response="Unauthorized")
+    if request.headers["Authorization"] != constants.SENECA_API_KEY:
+        return Response(status=401, response="Unauthorized")
+    return None

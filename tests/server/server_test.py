@@ -9,6 +9,7 @@ from pathlib import Path
 import requests
 
 from api.type import processed_pb2
+from api import constants
 from ml.server.server import Server
 
 class TestServer(unittest.TestCase):
@@ -24,32 +25,32 @@ class TestServer(unittest.TestCase):
 
         # Test empty request.
         request.data = ""
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request without request ID.
         lane_changes_for_video_request = processed_pb2.LaneChangesForVideoRequest()
         request.data = lane_changes_for_video_request.SerializeToString()
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request without video URL.
         lane_changes_for_video_request.request_id = "123"
         request.data = lane_changes_for_video_request.SerializeToString()
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request with invalid URL.
         lane_changes_for_video_request.simple_storage_video_url = "http://invalid"
         request.data = lane_changes_for_video_request.SerializeToString()
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test with exception thrown.
         mock_gcsc.download_file.side_effect = Exception()
         lane_changes_for_video_request.simple_storage_video_url = "gs://doesntmatter"
         request.data = lane_changes_for_video_request.SerializeToString()
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 500)
 
     @patch('ml.server.server.CloudStorageClient.download_file')
@@ -72,7 +73,7 @@ class TestServer(unittest.TestCase):
 
         lane_changes_for_video_response = processed_pb2.LaneChangesForVideoResponse()
 
-        response = test_server.handle_lane_changing_request(request)
+        response = test_server.handle_lane_changing_request(add_request_auth(request))
         self.assertEqual(response.status_code, 200)
         lane_changes_for_video_response.ParseFromString(response.response[0])
         self.assertEqual(
@@ -95,32 +96,32 @@ class TestServer(unittest.TestCase):
 
         # Test empty request.
         request.data = ""
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request without request ID.
         following_distances_for_video_request = processed_pb2.FollowingDistanceForVideoRequest()
         request.data = following_distances_for_video_request.SerializeToString()
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request without video URL.
         following_distances_for_video_request.request_id = "123"
         request.data = following_distances_for_video_request.SerializeToString()
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test request with invalid URL.
         following_distances_for_video_request.simple_storage_video_url = "http://invalid"
         request.data = following_distances_for_video_request.SerializeToString()
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 400)
 
         # Test with exception thrown.
         mock_gcsc.download_file.side_effect = Exception()
         following_distances_for_video_request.simple_storage_video_url = "gs://doesntmatter"
         request.data = following_distances_for_video_request.SerializeToString()
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 500)
 
     @patch('ml.server.server.CloudStorageClient.download_file')
@@ -143,7 +144,7 @@ class TestServer(unittest.TestCase):
 
         following_distances_for_video_response = processed_pb2.FollowingDistanceForVideoResponse()
 
-        response = test_server.handle_following_distance_request(request)
+        response = test_server.handle_following_distance_request(add_request_auth(request))
         self.assertEqual(response.status_code, 200)
         following_distances_for_video_response.ParseFromString(response.response[0])
         self.assertEqual(
@@ -154,3 +155,7 @@ class TestServer(unittest.TestCase):
             len(following_distances_for_video_response
                     .following_distance_for_video.following_distance_for_frame),
             1)
+
+def add_request_auth(request):
+    request.headers["Authorization"] = constants.SENECA_API_KEY
+    return request

@@ -34,6 +34,7 @@ class ObjectDetector:
         self.label_mapping = {
             # car
             2: 1,
+            # truck
             7: 2
         }
 
@@ -99,7 +100,7 @@ class ObjectDetector:
         sized = cv2.cvtColor(sized, cv2.COLOR_BGR2RGB)
 
         for _ in range(2):
-            boxes = do_detect(self.model, sized, 0.4, 0.6, True)
+            boxes = do_detect(self.model, sized, 0.4, 0.6, None, True)
 
         objects_in_frame = processed_pb2.ObjectsInFrame()
 
