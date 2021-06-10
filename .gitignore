@@ -10,3 +10,4 @@ venv
 dev.py
 demo.py
 .pytest_cache/
+tmp/

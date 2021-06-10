@@ -73,7 +73,7 @@ def convert2cpu_long(gpu_matrix):
 
 
 
-def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
+def do_detect(model, img, conf_thresh, nms_thresh, should_include, use_cuda=1):
     """
     do_detect TODO(lucaloncar): document
     Params:
@@ -81,6 +81,7 @@ def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
         img: ?
         conf_thresh: ?
         nms_thresh: ?
+        should_include: a function that is passed down to post_processing
         use_cuda: ?
     Returns:
         boxes: ?
@@ -111,5 +112,5 @@ def do_detect(model, img, conf_thresh, nms_thresh, use_cuda=1):
     print('      Model Inference : %f' % (t2 - t1))
     print('-----------------------------------')
 
-    return utils.post_processing(img, conf_thresh, nms_thresh, output)
+    return utils.post_processing(img, conf_thresh, nms_thresh, output, should_include)
 

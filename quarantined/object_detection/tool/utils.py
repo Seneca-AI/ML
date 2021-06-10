@@ -163,13 +163,14 @@ def load_class_names(namesfile):
 
 
 
-def post_processing(img, conf_thresh, nms_thresh, output):
+def post_processing(img, conf_thresh, nms_thresh, output, should_include):
     """
     post_processing TODO(lucaloncar): document
     Params:
         img: ?
         conf_thresh: ?
         output: ?
+        should_include: function that filters out boxes
     Returns:
         boxes: ?
     """
@@ -228,7 +229,11 @@ def post_processing(img, conf_thresh, nms_thresh, output):
                 for k in range(ll_box_array.shape[0]):
                     bottom_left_corner = (ll_box_array[k, 0], ll_box_array[k, 1])
                     top_right_corner = (ll_box_array[k, 2], ll_box_array[k, 3])
-                    bboxes.append([bottom_left_corner[0], bottom_left_corner[1], top_right_corner[0], top_right_corner[1], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]])
+
+                    bounding_box = [bottom_left_corner[0], bottom_left_corner[1], top_right_corner[0], top_right_corner[1], ll_max_conf[k], ll_max_conf[k], ll_max_id[k]]
+
+                    if should_include is None or should_include(bounding_box):
+                        bboxes.append(bounding_box)
         
         bboxes_batch.append(bboxes)
 
