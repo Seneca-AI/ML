@@ -1,6 +1,6 @@
 # Seneca-AI/ML
 
-Once upon a time, this repo was for a server that would host services that ran Seneca's machine learning algorithm.
+Once upon a time, this repo was for a server that would host services that ran Seneca's machine learning algorithms.
 
 Now you can basically just run https://github.com/Tianxiaomo/pytorch-YOLOv4 on a Google Cloud instance.  I never got around to figuring out how to use git
 submodules, so it's just copied and pasted under quarantined/object_detection.
